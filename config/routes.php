@@ -1,6 +1,6 @@
 <?php
 
-use App\Controllers\{AuthController, CategoryController, IncidentController, ProductController};
+use App\Controllers\{UserController, IncidentController};
 use App\Controllers\HomeController;
 use App\Core\Router;
 
