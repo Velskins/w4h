@@ -9,7 +9,7 @@ final class View
     {
         $viewsDir = dirname(__DIR__) . '/../views';
         $viewFile = $viewsDir . '/' . $template . '.php';
-        $layout   = $viewsDir . '/../layout.php';
+        $layout   = $viewsDir . '/layout.php';
 
         if (!file_exists($viewFile)) {
             return "View introuvable: {$template}";

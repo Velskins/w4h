@@ -2,7 +2,6 @@
 <p><?= htmlspecialchars($message) ?></p>
 
 
-<!--A METTRE DANS UN COMPOSANT NAV et l'importer */-->
 <div style="margin-top: 20px;">
     <h3>Accès rapide :</h3>
     <ul>

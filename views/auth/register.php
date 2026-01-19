@@ -2,6 +2,8 @@
     <?= htmlspecialchars($title) ?>
 </h2>
 
+
+
 <?php if (isset($error)): ?>
     <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 10px;">
         <?= htmlspecialchars($error) ?>
