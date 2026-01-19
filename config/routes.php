@@ -7,9 +7,15 @@ use App\Core\Router;
 return function (Router $router) {
     $router->get('/', [HomeController::class, 'index']);
 
-    $router->get('/login', [AuthController::class, 'showLogin']);
-    $router->post('/login', [AuthController::class, 'login']);
-    $router->post('/logout', [AuthController::class, 'logout']);
+    $router->get('/register', [UserController::class, 'register']);
+    $router->post('/register', [UserController::class, 'handleRegister']);
+
+    $router->get('/login', [UserController::class, 'login']);
+    $router->post('/login', [UserController::class, 'handleLogin']);
+
+    $router->get('/logout', [UserController::class, 'logout']);
+
+    $router->get('/profile', [UserController::class, 'profile']);
 
     $router->get('/incident', [IncidentController::class, 'index']);
     $router->get('/incident/show', [IncidentController::class, 'show']);

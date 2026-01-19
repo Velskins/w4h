@@ -22,7 +22,6 @@ final class UserController extends Controller
 
     public function profile(): Response
     {
-        // TODO: Récupérer ID SESSION. Pour le moment ID = 1 en dur.
         $userId = 1;
         $user = $this->users->findOneById($userId);
 
@@ -49,7 +48,7 @@ final class UserController extends Controller
         $pwd = (string) $this->request->input('pwd');
         $lastname = trim((string) $this->request->input('lastname'));
         $firstname = trim((string) $this->request->input('firstname'));
-        $isHero = $this->request->input('is_hero'); // TODO: checkbox dans le form
+        $isHero = $this->request->input('is_hero');
 
         if (empty($email) || empty($pwd)) {
             return $this->view('auth/register', [
@@ -91,5 +90,41 @@ final class UserController extends Controller
         return $this->view('auth/login', [
             'title' => 'Connexion'
         ]);
+    }
+
+    public function handleLogin(): Response
+    {
+        $email = trim((string) $this->request->input('email'));
+        $pwd = (string) $this->request->input('pwd');
+
+        $user = $this->users->findOneByEmail($email);
+
+        if ($user && password_verify($pwd, $user['pwd'])) {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_firstname'] = $user['firstname'];
+            $_SESSION['user_role'] = $user['role'];
+
+            return Response::redirect('/profile');
+        }
+
+        return $this->view('auth/login', [
+            'error' => 'Identifiants incorrects',
+            'title' => 'Connexion'
+        ], 401);
+    }
+
+    public function logout(): Response
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        session_destroy();
+
+        return Response::redirect('/login');
     }
 }

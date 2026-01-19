@@ -25,7 +25,11 @@ final class Container
 
     public function make(string $class, Request $request): object
     {
-        return match ($class) {
+        $controllerClass = str_contains($class, 'App\\Controllers\\')
+            ? $class
+            : "App\\Controllers\\" . $class;
+
+        return match ($controllerClass) {
 
             UserController::class => new UserController(
                 $request,
@@ -38,7 +42,7 @@ final class Container
                 new VillainRepository($this->pdo)
             ),
 
-            default => new $class($request),
+            default => new $controllerClass($request),
         };
     }
 }
