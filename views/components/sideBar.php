@@ -1,8 +1,13 @@
-<style>
-
-</style>
-
 <nav class="sidebar">
+    <div class="sidebar-header">
+        <div class="profile-image-container">
+            <!-- TODO: Ajouter Back pour pdp utilisateur-->
+            <img src="assets/img/default-avatar.png" alt="Profile" class="profile-img">
+        </div>
+<!-- TODO: Ajouter Back pour nom utilisateur-->
+        <h2 class="profile-name">IRON MAN</h2>
+    </div>
+
     <hr class="sidebar-divider">
 
     <ul class="nav-list">
@@ -58,14 +63,14 @@
         <li class="nav-item">
             <a href="#" class="nav-link">
                 <i class="fas fa-film"></i>
-                <span>Mes films</span>
+                <span>Les films</span>
             </a>
         </li>
 
         <li class="nav-item">
             <a href="#" class="nav-link">
                 <i class="fas fa-star"></i>
-                <span>Ma réputation</span>
+                <span>Ma réputation (si heros)</span>
             </a>
         </li>
     </ul>
