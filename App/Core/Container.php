@@ -6,8 +6,10 @@ namespace App\Core;
 use PDO;
 use App\Core\Request;
 
+
 use App\Controllers\UserController;
 use App\Controllers\IncidentController;
+use App\Controllers\AdminController;
 use App\Controllers\HomeController;
 
 use App\Repository\UserRepository;
@@ -38,6 +40,13 @@ final class Container
 
             IncidentController::class => new IncidentController(
                 $request,
+                new IncidentRepository($this->pdo),
+                new VillainRepository($this->pdo)
+            ),
+
+            AdminController::class => new AdminController(
+                $request,
+                new UserRepository($this->pdo),
                 new IncidentRepository($this->pdo),
                 new VillainRepository($this->pdo)
             ),

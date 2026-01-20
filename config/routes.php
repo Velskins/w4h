@@ -1,7 +1,6 @@
 <?php
 
-use App\Controllers\{UserController, IncidentController};
-use App\Controllers\HomeController;
+use App\Controllers\{UserController, IncidentController, HomeController, AdminController};
 use App\Core\Router;
 
 return function (Router $router) {
@@ -24,6 +23,11 @@ return function (Router $router) {
     $router->get('/incident/edit', [IncidentController::class, 'edit']);
     $router->post('/incident/update', [IncidentController::class, 'update']);
     $router->post('/incident/delete', [IncidentController::class, 'delete']);
+
+    $router->get('/admin', [AdminController::class, 'index']);
+    $router->get('/admin/incidents', [AdminController::class, 'listIncidents']);
+
+
 
 
 
