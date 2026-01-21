@@ -15,6 +15,9 @@ return function (Router $router) {
     $router->get('/logout', [UserController::class, 'logout']);
 
     $router->get('/profile', [UserController::class, 'profile']);
+    $router->get('/profile/edit', [UserController::class, 'editProfile']);
+    $router->post('/profile/edit', [UserController::class, 'handleEditProfile']);
+
 
     $router->get('/incident', [IncidentController::class, 'index']);
     $router->get('/incident/show', [IncidentController::class, 'show']);

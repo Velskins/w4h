@@ -20,20 +20,31 @@ final class UserController extends Controller
         $this->users = $users;
     }
 
+
+
     public function profile(): Response
     {
-        $userId = 1;
-        $user = $this->users->findOneById($userId);
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
+        $userId = $_SESSION['user_id'] ?? null;
+        if (!$userId) {
+            return Response::redirect('/login');
+        }
+
+        $user = $this->users->findOneById((int) $userId);
         if (!$user) {
             return Response::redirect('/login');
         }
 
         return $this->view('user/profile', [
             'title' => 'Mon Profil',
-            'user' => $user
+            'user'  => $user
         ]);
     }
+
+
 
     public function register(): Response
     {
@@ -44,15 +55,15 @@ final class UserController extends Controller
 
     public function handleRegister(): Response
     {
-        $email = trim((string) $this->request->input('email'));
-        $pwd = (string) $this->request->input('pwd');
-        $lastname = trim((string) $this->request->input('lastname'));
+        $email     = trim((string) $this->request->input('email'));
+        $pwd       = (string) $this->request->input('pwd');
+        $lastname  = trim((string) $this->request->input('lastname'));
         $firstname = trim((string) $this->request->input('firstname'));
-        $isHero = $this->request->input('is_hero');
+        $isHero    = $this->request->input('is_hero');
 
-        if (empty($email) || empty($pwd)) {
+        if (empty($email) || empty($pwd) || empty($lastname) || empty($firstname)) {
             return $this->view('auth/register', [
-                'error' => 'Email et mot de passe obligatoires',
+                'error' => 'Tous les champs obligatoires doivent être remplis',
                 'title' => 'Inscription'
             ], 422);
         }
@@ -67,23 +78,27 @@ final class UserController extends Controller
         $role = $isHero ? ['ROLE_HERO_PENDING'] : ['ROLE_CITIZEN'];
 
         $data = [
-            'email' => $email,
-            'pwd' => password_hash($pwd, PASSWORD_DEFAULT),
-            'lastname' => $lastname,
-            'firstname' => $firstname,
-            'gender' => $this->request->input('gender') ?? 'Autre',
-            'birthdate' => $this->request->input('birthdate'),
-            'role' => json_encode($role),
-            'street_number' => null,
-            'street' => null,
-            'zipcode' => null,
-            'city' => null
+            'email'        => $email,
+            'pwd'          => password_hash($pwd, PASSWORD_DEFAULT),
+            'lastname'     => $lastname,
+            'firstname'    => $firstname,
+            'gender'       => $this->request->input('gender') ?? 'other',
+            'birthdate'    => $this->request->input('birthdate'),
+            'phone'        => null,
+            'street_number'=> null,
+            'complement_number' => null,
+            'street'       => null,
+            'zipcode'      => null,
+            'city'         => null,
+            'role'         => json_encode($role)
         ];
 
         $this->users->create($data);
 
         return Response::redirect('/login');
     }
+
+
 
     public function login(): Response
     {
@@ -95,7 +110,7 @@ final class UserController extends Controller
     public function handleLogin(): Response
     {
         $email = trim((string) $this->request->input('email'));
-        $pwd = (string) $this->request->input('pwd');
+        $pwd   = (string) $this->request->input('pwd');
 
         $user = $this->users->findOneByEmail($email);
 
@@ -104,9 +119,9 @@ final class UserController extends Controller
                 session_start();
             }
 
-            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_id']        = $user['id'];
             $_SESSION['user_firstname'] = $user['firstname'];
-            $_SESSION['user_role'] = $user['role'];
+            $_SESSION['user_role']      = $user['role'];
 
             return Response::redirect('/profile');
         }
@@ -117,6 +132,8 @@ final class UserController extends Controller
         ], 401);
     }
 
+
+
     public function logout(): Response
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -126,5 +143,65 @@ final class UserController extends Controller
         session_destroy();
 
         return Response::redirect('/login');
+    }
+
+
+
+    public function editProfile(): Response
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $userId = $_SESSION['user_id'] ?? null;
+        if (!$userId) {
+            return Response::redirect('/login');
+        }
+
+        $user = $this->users->findOneById((int) $userId);
+
+        return $this->view('user/edit_profile', [
+            'title' => 'Éditer mon profil',
+            'user'  => $user
+        ]);
+    }
+
+    public function handleEditProfile(): Response
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $userId = $_SESSION['user_id'] ?? null;
+        if (!$userId) {
+            return Response::redirect('/login');
+        }
+
+        $existingUser = $this->users->findOneById((int) $userId);
+        if (!$existingUser) {
+            return Response::redirect('/login');
+        }
+
+        $data = [
+            'email'        => trim((string) $this->request->input('email')),
+            'firstname'    => trim((string) $this->request->input('firstname')),
+            'lastname'     => trim((string) $this->request->input('lastname')),
+            'gender'       => $this->request->input('gender') ?? 'other',
+            'birthdate'    => $this->request->input('birthdate'),
+            'phone'        => $this->request->input('phone') ?? '',
+            'street_number'=> $this->request->input('street_number') ?? null,
+            'complement_number' => $this->request->input('complement_number') ?? null,
+            'street'       => $this->request->input('street') ?? '',
+            'zipcode'      => $this->request->input('zipcode') ?? null,
+            'city'         => $this->request->input('city') ?? '',
+
+
+            'pwd'          => $existingUser['pwd'],
+            'role'         => $existingUser['role']
+        ];
+
+        $this->users->update((int) $userId, $data);
+
+        return Response::redirect('/profile');
     }
 }
