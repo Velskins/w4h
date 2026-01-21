@@ -8,7 +8,6 @@
     <title>Web 4 Heroes</title>
 </head>
 <body>
-<?php  require __DIR__ . '/components/sideBar.php'; ?> 
 <?php include __DIR__ . "/components/header.php"; ?>
 <main>
     <?php include $viewFile; ?>
