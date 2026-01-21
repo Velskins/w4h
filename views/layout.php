@@ -9,8 +9,14 @@
 </head>
 <body>
 <?php include __DIR__ . "/components/header.php"; ?>
+
 <main>
-    <?php include $viewFile; ?>
+   <?php if (isset($view) && file_exists($view)) {
+    require $view;
+    } else {
+    echo "<p>Vue introuvable.</p>";
+    }
+    ?>
 </main>
 <?php include __DIR__ . "/components/footer.php"; ?>
 
