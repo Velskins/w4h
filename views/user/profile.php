@@ -35,4 +35,8 @@
     </p>
 
     <a href="/logout">Se déconnecter</a>
+    <a href="../incident/create.php">Déclarer un incident</a>
+    <p>
+        <a href="/profile/edit">Éditer mon profil</a>
+    </p>
 </div>
