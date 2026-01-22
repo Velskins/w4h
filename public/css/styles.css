@@ -4,7 +4,7 @@
     --text-color: #ffffff;
     --text-muted: #a0aec0;
     --divider-color: #3e4c59;
-    --badge-bg: #e53e3e; 
+    --badge-bg: #e53e3e;
 }
 
 body {
@@ -13,7 +13,7 @@ body {
 
 .sidebar {
     width: 260px;
-    height: 80vh; 
+    height: 80vh;
     background-color: var(--sidebar-bg);
     color: var(--text-color);
     display: flex;
@@ -21,7 +21,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: fixed;
     left: 0;
-    top: 75px; 
+    top: 75px;
     overflow-y: auto;
     border-right: 1px solid #000;
 }
@@ -40,7 +40,7 @@ body {
     margin-bottom: 15px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid #333; 
+    border: 2px solid #333;
 }
 
 .profile-img {
@@ -89,7 +89,7 @@ body {
 
 .nav-link:hover {
     background-color: var(--sidebar-hover);
-    border-left: 4px solid #fff; 
+    border-left: 4px solid #fff;
 }
 
 .nav-link i {
@@ -144,4 +144,124 @@ header{
     padding: 8px;
     border-radius: 5px;
     font-size: 0.9rem;
+}
+
+
+/*
+////////////////////////////////////////////////////
+ */
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+.login {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background-image: url("../assets/DA/iron4k.jpg");
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+
+.login::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: rgba(230, 220, 215, 0.85);
+    z-index: 1;
+}
+
+
+.login-content {
+    position: absolute;
+    top: 50%;
+    right: 8%;
+    transform: translateY(-50%);
+    width: 320px;
+    z-index: 2;
+    text-align: left;
+}
+
+
+.login-content h1 {
+    margin-bottom: 100px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #1f3552;
+    letter-spacing: 1px;
+}
+
+
+.login-content input {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+
+.forgot {
+    display: block;
+    margin-bottom: 22px;
+    font-size: 12px;
+    color: #5d6d7e;
+    text-decoration: none;
+}
+
+
+.login-content button {
+    width: 100%;
+    padding: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border: none;
+    background: linear-gradient(to bottom, #2c4d73, #1f3552);
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.signup {
+    margin-top: 26px;
+    font-size: 12px;
+    color: #34495e;
+}
+
+.signup a {
+    color: #2c4d73;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/*.login::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: rgba(230, 220, 215, 0.85);
+    z-index: 1;
+    pointer-events: none;
 }
