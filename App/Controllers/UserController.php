@@ -84,12 +84,12 @@ final class UserController extends Controller
             'firstname'    => $firstname,
             'gender'       => $this->request->input('gender') ?? 'other',
             'birthdate'    => $this->request->input('birthdate'),
-            'phone'        => null,
-            'street_number'=> null,
-            'complement_number' => null,
-            'street'       => null,
-            'zipcode'      => null,
-            'city'         => null,
+            'phone' => $this->request->input('phone') ?: '0000000000',
+            'street_number' => $this->request->input('street_number') ?: 0,
+            'complement_number' => $this->request->input('complement_number') ?: '',
+            'street' => $this->request->input('street') ?: '',
+            'zipcode' => $this->request->input('zipcode') ?: 0,
+            'city' => $this->request->input('city') ?: '',
             'role'         => json_encode($role)
         ];
 
