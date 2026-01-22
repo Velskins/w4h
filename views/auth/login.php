@@ -2,7 +2,7 @@
     .form_login  {
         margin-top: 300px;
     }
-    </style
+</style
 <h2>
     <?= htmlspecialchars($title) ?>
 </h2>
