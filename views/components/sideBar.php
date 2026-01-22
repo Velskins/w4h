@@ -1,18 +1,18 @@
-<nav class="sidebar">
+ <nav class="sidebar">
     <div class="sidebar-header">
         <div class="profile-image-container">
-            <!-- TODO: Ajouter Back pour pdp utilisateur-->
-            <img src="assets/img/default-avatar.png" alt="Profile" class="profile-img">
+            <!-- TODO: Ajouter Back pour pdp utilisateur -->
+           <img src="assets/img/default-avatar.png" alt="Profile" class="profile-img">
         </div>
 <!-- TODO: Ajouter Back pour nom utilisateur-->
-        <h2 class="profile-name">IRON MAN</h2>
+       <h2 class="profile-name">IRON MAN</h2>
     </div>
 
     <hr class="sidebar-divider">
 
     <ul class="nav-list">
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/profile" class="nav-link">
                 <i class="fas fa-home"></i> <span>Mon espace</span>
             </a>
         </li>
@@ -30,7 +30,7 @@
         <hr class="sidebar-divider">
 
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/incident/create" class="nav-link">
                 <i class="fas fa-bullhorn"></i>
                 <span>Déclarer un incident</span>
             </a>
@@ -44,7 +44,7 @@
         </li>
 
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/incident" class="nav-link">
                 <i class="fas fa-broadcast-tower"></i>
                 <span>Incidents en cours</span>
                 <span class="badge">13</span>
@@ -54,7 +54,7 @@
         <hr class="sidebar-divider">
 
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/profile/edit" class="nav-link">
                 <i class="fas fa-user-circle"></i>
                 <span>Mon compte</span>
             </a>
@@ -79,7 +79,7 @@
         <hr class="sidebar-divider">
         <ul class="nav-list">
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/logout" class="nav-link">
                     <i class="fas fa-power-off"></i>
                     <span>Déconnexion</span>
                 </a>
@@ -87,3 +87,5 @@
         </ul>
     </div>
 </nav>
+
+

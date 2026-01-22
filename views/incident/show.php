@@ -54,3 +54,6 @@
 </div>
 
 <p><a href="/incident">Retour à la liste</a></p>
+<p>
+    <a href="/incident/edit?id=<?= $incident['id'] ?>">Modifier</a>
+</p>
