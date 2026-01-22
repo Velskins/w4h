@@ -123,7 +123,7 @@ final class UserController extends Controller
             $_SESSION['user_firstname'] = $user['firstname'];
             $_SESSION['user_role']      = $user['role'];
 
-            return Response::redirect('/profile');
+            return Response::redirect('/citizen/dashboard');
         }
 
         return $this->view('auth/login', [
