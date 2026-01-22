@@ -21,7 +21,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: fixed;
     left: 0;
-    top: 75px;
+    top: 92px;
     overflow-y: auto;
     border-right: 1px solid #000;
 }
@@ -138,11 +138,6 @@ body {
     padding: 8px;
     border-radius: 5px;
     font-size: 0.9rem;
-}
-
-main {
-    margin-left: 250px;
-    padding: 1rem;
 }
 
 

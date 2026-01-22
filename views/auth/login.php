@@ -2,7 +2,7 @@
     .form_login  {
         margin-top: 300px;
     }
-    </style
+</style>
 <h2>
     <?= htmlspecialchars($title) ?>
 </h2>
@@ -19,3 +19,4 @@
 </form>
 
 <p>Pas encore inscrit ? <a href="/register">S'inscrire</a></p>
+

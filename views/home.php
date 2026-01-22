@@ -8,7 +8,7 @@
         <div class="position-absolute w-100 h-100"
             style="background: radial-gradient(circle at 20%, transparent 0%, rgba(11, 22, 34, 0.9) 100%); z-index: 0;"></div>
 
-        <div class="container position-relative rounded-5" style="z-index: 2; background: linear-gradient(180deg, #172A3D 0%, #222F39 100%);">
+        <div class="container position-relative rounded-5" style="z-index: 2; background: linear-gradient(180deg, #172A3D 0%, #222F39 100%); border: 2px solid white;">
             <div class="row align-items-center p-5">
                 <div class="col-lg-5 offset-lg-1">
                     <h1 class="display-3 fw-bold mb-2">Signalez un incident</h1>

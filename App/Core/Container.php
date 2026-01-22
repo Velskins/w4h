@@ -11,6 +11,7 @@ use App\Controllers\UserController;
 use App\Controllers\IncidentController;
 use App\Controllers\AdminController;
 use App\Controllers\HomeController;
+use App\Controllers\CitizenController;
 
 use App\Repository\UserRepository;
 use App\Repository\IncidentRepository;
@@ -38,6 +39,11 @@ final class Container
                 new UserRepository($this->pdo)
             ),
 
+            CitizenController::class => new CitizenController(
+                $request,
+                new UserRepository($this->pdo)
+            ),
+
             IncidentController::class => new IncidentController(
                 $request,
                 new IncidentRepository($this->pdo),
@@ -50,6 +56,7 @@ final class Container
                 new IncidentRepository($this->pdo),
                 new VillainRepository($this->pdo)
             ),
+
 
             default => new $controllerClass($request),
         };

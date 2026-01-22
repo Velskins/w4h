@@ -9,7 +9,7 @@
 <?php endif; ?>
 
 
-<form action="/register" method="POST">
+<form action="/register" method="POST" style="background-color: black;">
     <label>Email :</label><br>
     <input type="email" name="email" required><br><br>
 
