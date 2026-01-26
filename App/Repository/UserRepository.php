@@ -47,11 +47,11 @@ final class UserRepository
     {
         $stmt = $this->pdo->prepare("
             INSERT INTO users (
-                email, pwd, lastname, firstname, gender, birthdate, phone, 
+                email, pwd, lastname, firstname, gender, birthdate, phone,
                 street_number, complement_number, street, zipcode, city, role
             )
             VALUES (
-                :email, :pwd, :lastname, :firstname, :gender, :birthdate, :phone, 
+                :email, :pwd, :lastname, :firstname, :gender, :birthdate, :phone,
                 :street_number, :complement_number, :street, :zipcode, :city, :role
             )
         ");
@@ -121,4 +121,20 @@ final class UserRepository
         $stmt->execute([':id' => $id]);
         return $stmt->rowCount() > 0;
     }
+
+    public function findHeroes(): array
+    {
+        $stmt = $this->pdo->prepare("
+        SELECT id, firstname, lastname, email, city
+        FROM users
+        WHERE JSON_CONTAINS(role, '\"ROLE_HERO\"')
+           OR JSON_CONTAINS(role, '\"ROLE_HERO_PENDING\"')
+        ORDER BY lastname ASC
+    ");
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
 }
+

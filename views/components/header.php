@@ -39,7 +39,7 @@ $showAuthButtons = in_array($currentPath, $publicPages) && !$isLoggedIn;
 
         <div class="header-logo">
             <a href="/">
-                <img src="/../public/assets/DA/logo.svg" alt="Web4Heroes Logo" style="height: 60px;">
+                <img src="/public/assets/DA/ww4h-removebg-preview.png" alt="Web4Heroes Logo" style="height: 100px ; ">
             </a>
         </div>
 
@@ -47,7 +47,7 @@ $showAuthButtons = in_array($currentPath, $publicPages) && !$isLoggedIn;
             <a href="#" class="text-white text-decoration-none opacity-75 px-3 hover-opacity-100">Comment ça marche
                 ?</a>
             <a href="#" class="text-white text-decoration-none opacity-75 px-3 hover-opacity-100">Recherche</a>
-            <a href="#" class="text-white text-decoration-none opacity-75 px-3 hover-opacity-100">Super-héros</a>
+            <a href="/heroes" class="text-white text-decoration-none opacity-75 px-3 hover-opacity-100">Super-héros</a>
         </nav>
 
         <div class="d-flex gap-2" style="min-width: 200px; justify-content: flex-end;">

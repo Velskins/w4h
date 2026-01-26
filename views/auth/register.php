@@ -1,63 +1,94 @@
-<h2>
-    <?= htmlspecialchars($title) ?>
-</h2>
+<form action="/register" method="POST" class="split-screen-form">
 
-<?php if (isset($error)): ?>
-    <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 10px;">
-        <?= htmlspecialchars($error) ?>
+    <div class="panel left-panel">
+        <div class="panel-content">
+            <h1>Inscription</h1>
+
+            <?php if (isset($error)): ?>
+                <div style="color: red; background: rgba(255,0,0,0.1); padding: 10px; border-radius: 10px; margin-bottom: 20px;">
+                    <?= htmlspecialchars($error) ?>
+                </div>
+            <?php endif; ?>
+
+            <label class="section-label">Informations personnelles <span class="required-star">*</span></label>
+
+            <div class="input-row">
+                <select name="gender" required>
+                    <option value="" disabled selected>Civilité</option>
+                    <option value="Male">Monsieur</option>
+                    <option value="Femelle">Madame</option>
+                    <option value="other">Autre</option>
+                </select>
+            </div>
+
+            <div class="input-row">
+                <input type="text" name="lastname" placeholder="Nom" required>
+                <input type="text" name="firstname" placeholder="Prénom" required>
+            </div>
+
+            <div class="input-row">
+                <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" name="birthdate" placeholder="Date de naissance">
+            </div>
+
+            <div class="input-row">
+                <input type="email" name="email" placeholder="Adresse Email" required>
+            </div>
+
+            <label class="section-label" style="margin-top: 20px;">Informations complémentaires</label>
+
+            <div class="input-row">
+                <input type="tel" name="phone" placeholder="N° de portable">
+            </div>
+
+            <div style="margin-top: 10px; color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" name="is_hero" value="1" style="width: auto; margin:0;">
+                <label>Je souhaite devenir un <strong>Héros</strong></label>
+            </div>
+        </div>
     </div>
-<?php endif; ?>
 
+    <div class="panel right-panel">
+        <div class="panel-content">
 
-<form action="/register" method="POST" style="background-color: black;">
-    <label>Email :</label><br>
-    <input type="email" name="email" required><br><br>
+            <label class="section-label">Coordonnées <span class="required-star">*</span></label>
 
-    <label>Mot de passe :</label><br>
-    <input type="password" name="pwd" required><br><br>
+            <div class="input-row">
+                <input type="number" name="street_number" placeholder="N°" style="flex: 0 0 80px;">
+                <input type="text" name="street" placeholder="Nom de la voie">
+            </div>
 
-    <label>Prénom :</label><br>
-    <input type="text" name="firstname" required><br><br>
+            <div class="input-row">
+                <input type="text" name="complement_number" placeholder="Complément (facultatif)">
+            </div>
 
-    <label>Nom :</label><br>
-    <input type="text" name="lastname" required><br><br>
+            <div class="input-row">
+                <input type="text" name="city" placeholder="Ville">
+                <input type="number" name="zipcode" placeholder="Code Postal">
+            </div>
 
-    <label>Genre :</label><br>
-    <select name="gender">
-        <option value="other">Autre</option>
-        <option value="Male">Homme</option>
-        <option value="Femelle">Femme</option>
-    </select><br><br>
+            <div class="input-row">
+                <select name="country">
+                    <option value="France">France</option>
+                    <option value="Belgique">Belgique</option>
+                    <option value="Suisse">Suisse</option>
+                    <option value="USA">États-Unis</option>
+                </select>
+            </div>
 
-    <label>Date de naissance :</label><br>
-    <input type="date" name="birthdate"><br><br>
+            <label class="section-label" style="margin-top: 30px;">Sécurité <span class="required-star">*</span></label>
 
-    <label>Numéro de téléphone :</label><br>
-    <input type="text" name="phone"><br><br>
+            <div class="input-row">
+                <input type="password" name="pwd" placeholder="Mot de passe" required>
+                <input type="password" name="pwd_confirm" placeholder="Confirmation">
+            </div>
 
-    <label>Numéro de rue :</label><br>
-    <input type="number" name="street_number"><br><br>
+            <button type="submit" class="submit-btn">Inscription</button>
 
-    <label>Complément :</label><br>
-    <input type="text" name="complement_number"><br><br>
+            <div class="login-link">
+                Vous avez déjà un compte ? <a href="/login">Connectez-vous</a>
+            </div>
 
-    <label>Rue :</label><br>
-    <input type="text" name="street"><br><br>
+        </div>
+    </div>
 
-    <label>Code postal :</label><br>
-    <input type="number" name="zipcode"><br><br>
-
-    <label>Ville :</label><br>
-    <input type="text" name="city"><br><br>
-
-    <label>Voulez-vous devenir héros ?</label>
-    <input type="checkbox" name="is_hero" value="1"><br><br>
-
-    <button type="submit">S'inscrire</button>
 </form>
-
-<p>Déjà inscrit ? <a href="/login">Se connecter</a></p>
-</body>
-</html>
-
-
