@@ -22,11 +22,25 @@ final class CitizenController extends Controller
         }
     }
 
-    //TODO: Récupérer les infos de la session user
     public function index(): Response
     {
+        if (!isset($_SESSION['user_id'])) {
+            return Response::redirect('/login');
+        }
+
         return $this->view('citizen/dashboard', [
             'title' => 'Tableau de bord Citoyen'
+        ]);
+    }
+
+    public function createIncident(): Response
+    {
+        if (!isset($_SESSION['user_id'])) {
+            return Response::redirect('/login');
+        }
+
+        return $this->view('citizen/create_incident', [
+            'title' => 'Déclarer un incident'
         ]);
     }
 }

@@ -1,5 +1,8 @@
 <footer class="w-100 py-3 mt-auto" style="background-color: #122030; border-top: 1px solid rgba(255,255,255,0.1);">
     <div class="container-fluid px-5">
+        <div class="">
+
+        </div>
         <div class="row align-items-center text-secondary small">
             <div class="col-md-4 text-center text-md-start">
                 <p class="mb-0">©web4heroes - 2026</p>

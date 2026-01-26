@@ -26,6 +26,7 @@ final class IncidentRepository
             JOIN adresses_incidents a ON i.adresses_incidents_id = a.id
             JOIN users u ON i.users_id = u.id
             LEFT JOIN villain_profile v ON i.villain_profile_id = v.id
+            WHERE i.status IN ('Validé', 'En cours', 'Terminé')
             ORDER BY i.date DESC
         ");
         $stmt->execute();
@@ -157,5 +158,40 @@ final class IncidentRepository
         $stmt = $this->pdo->prepare("DELETE FROM incidents WHERE id = :id");
         $stmt->execute([':id' => $id]);
         return $stmt->rowCount() > 0;
+    }
+
+
+
+
+    // --- PARTIE ADMIN ---
+
+    public function findAllPending(): array
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT i.*, 
+                   a.city, a.zipcode,
+                   u.firstname, u.lastname, u.email
+            FROM incidents i
+            JOIN adresses_incidents a ON i.adresses_incidents_id = a.id
+            JOIN users u ON i.users_id = u.id
+            WHERE i.status = 'En attente'
+            ORDER BY i.date ASC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function updateStatus(int $id, string $newStatus): bool
+    {
+        $allowed = ['Validé', 'Refusé', 'En cours', 'Terminé'];
+        if (!in_array($newStatus, $allowed)) {
+            return false;
+        }
+
+        $stmt = $this->pdo->prepare("UPDATE incidents SET status = :status WHERE id = :id");
+        return $stmt->execute([
+            ':status' => $newStatus,
+            ':id' => $id
+        ]);
     }
 }

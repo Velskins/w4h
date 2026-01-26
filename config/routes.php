@@ -1,6 +1,6 @@
 <?php
 
-use App\Controllers\{UserController, IncidentController, HomeController, AdminController, CitizenController};
+use App\Controllers\{UserController, IncidentController, HomeController, AdminController, CitizenController, HeroController};
 use App\Core\Router;
 
 return function (Router $router) {
@@ -15,7 +15,7 @@ return function (Router $router) {
     $router->get('/logout', [UserController::class, 'logout']);
 
     $router->get('/citizen/dashboard', [CitizenController::class, 'index']);
-
+    
     $router->get('/profile', [UserController::class, 'profile']);
     $router->get('/profile/edit', [UserController::class, 'editProfile']);
     $router->post('/profile/edit', [UserController::class, 'handleEditProfile']);
@@ -29,12 +29,13 @@ return function (Router $router) {
     $router->post('/incident/update', [IncidentController::class, 'update']);
     $router->post('/incident/delete', [IncidentController::class, 'delete']);
 
+    $router->get('/hero/create', [HeroController::class, 'create']);
+    $router->post('/hero/store', [HeroController::class, 'store']);
+
     $router->get('/admin', [AdminController::class, 'index']);
     $router->get('/admin/incidents', [AdminController::class, 'listIncidents']);
-
-    $router->get('/heroes', [UserController::class, 'heroes']);
-    $router->get('/profile/show', [UserController::class, 'showProfile']);
-
+    $router->post('/admin/incident/validate', [AdminController::class, 'validateIncident']);
+    $router->post('/admin/hero/validate', [AdminController::class, 'validateHero']);
 
 
 
