@@ -6,16 +6,18 @@ namespace App\Core;
 use PDO;
 use App\Core\Request;
 
-
 use App\Controllers\UserController;
 use App\Controllers\IncidentController;
 use App\Controllers\AdminController;
 use App\Controllers\HomeController;
 use App\Controllers\CitizenController;
+use App\Controllers\HeroController;
+
 
 use App\Repository\UserRepository;
 use App\Repository\IncidentRepository;
 use App\Repository\VillainRepository;
+use App\Repository\HeroProfileRepository;
 
 final class Container
 {
@@ -41,22 +43,28 @@ final class Container
 
             CitizenController::class => new CitizenController(
                 $request,
-                new UserRepository($this->pdo)
+                new UserRepository($this->pdo),
+                new IncidentRepository($this->pdo)
             ),
 
             IncidentController::class => new IncidentController(
                 $request,
-                new IncidentRepository($this->pdo),
-                new VillainRepository($this->pdo)
+                new IncidentRepository($this->pdo)
+            ),
+
+            HeroController::class => new HeroController(
+                $request,
+                new HeroProfileRepository($this->pdo),
+                new UserRepository($this->pdo)
             ),
 
             AdminController::class => new AdminController(
                 $request,
                 new UserRepository($this->pdo),
                 new IncidentRepository($this->pdo),
-                new VillainRepository($this->pdo)
+                new VillainRepository($this->pdo),
+                new HeroProfileRepository($this->pdo)
             ),
-
 
             default => new $controllerClass($request),
         };

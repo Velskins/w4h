@@ -7,27 +7,22 @@ use App\Core\Controller;
 use App\Core\Request;
 use App\Core\Response;
 use App\Repository\IncidentRepository;
-use App\Repository\VillainRepository;
 
 final class IncidentController extends Controller
 {
     private IncidentRepository $incidents;
-    private VillainRepository $villains;
 
     public function __construct(
         Request $request,
-        IncidentRepository $incidents,
-        VillainRepository $villains
+        IncidentRepository $incidents
     ) {
         parent::__construct($request);
         $this->incidents = $incidents;
-        $this->villains = $villains;
     }
 
     public function index(): Response
     {
         $incidents = $this->incidents->findAll();
-
         return $this->view('incident/index', [
             'title' => 'Incidents en cours',
             'incidents' => $incidents
@@ -37,38 +32,43 @@ final class IncidentController extends Controller
     public function show(): Response
     {
         $id = (int) $this->request->query('id');
-
         $incident = $this->incidents->findOneById($id);
 
         if (!$incident) {
             return new Response('Incident introuvable', 404);
         }
 
-        return $this->view('incident/show', [
-            'incident' => $incident
-        ]);
+        return $this->view('incident/show', ['incident' => $incident]);
     }
 
     public function create(): Response
     {
-        return $this->view('incident/create', [
-            'title' => 'Déclarer un incident',
-            'villains' => $this->villains->findAll()
-        ]);
+        if (session_status() === PHP_SESSION_NONE)
+            session_start();
+        if (!isset($_SESSION['user_id'])) {
+            return Response::redirect('/login');
+        }
+
+        return $this->view('citizen/create_incident', ['title' => 'Déclarer un incident']);
     }
 
     public function store(): Response
     {
+        if (session_status() === PHP_SESSION_NONE)
+            session_start();
+        if (!isset($_SESSION['user_id'])) {
+            return Response::redirect('/login');
+        }
+
         $data = [
             'title' => trim((string) $this->request->input('title')),
             'description' => trim((string) $this->request->input('description')),
-            'date' => date('Y-m-d H:i:s'), 
-            'priority' => 'Basse', 
-            'type' => $this->request->input('type'), 
-            'status' => "Signalé à l'instant",
-            'users_id' => 1, // TODO: ID utilisateur connecté
-
-            'villain_profile_id' => $this->request->input('villain_profile_id') ?: null,
+            'date' => date('Y-m-d H:i:s'),
+            'priority' => 'Low',
+            'type' => $this->request->input('type'),
+            'status' => 'En attente',
+            'users_id' => $_SESSION['user_id'],
+            'villain_profile_id' => null,
 
             'address_numero' => (int) $this->request->input('numero'),
             'address_complement' => $this->request->input('complement_numero'),
@@ -77,16 +77,12 @@ final class IncidentController extends Controller
             'address_city' => trim((string) $this->request->input('city')),
         ];
 
-        if (empty($data['title']) || empty($data['address_city'])) {
-            return $this->view('incident/create', [
-                'error' => 'Le titre et la ville sont obligatoires',
-                'villains' => $this->villains->findAll(),
-                'data' => $data 
-            ], 422);
+        if (empty($data['title']) || empty($data['address_city']) || empty($data['address_street'])) {
+            return Response::redirect('/incident/create');
         }
 
         $this->incidents->create($data);
 
-        return Response::redirect('/incidents');
+        return Response::redirect('/citizen/dashboard');
     }
 }
