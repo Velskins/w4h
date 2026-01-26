@@ -18,6 +18,7 @@ use App\Repository\UserRepository;
 use App\Repository\IncidentRepository;
 use App\Repository\VillainRepository;
 use App\Repository\HeroProfileRepository;
+use App\Repository\InterventionRepository;
 
 final class Container
 {
@@ -55,7 +56,9 @@ final class Container
             HeroController::class => new HeroController(
                 $request,
                 new HeroProfileRepository($this->pdo),
-                new UserRepository($this->pdo)
+                new UserRepository($this->pdo),
+                new IncidentRepository($this->pdo),
+                new InterventionRepository($this->pdo) 
             ),
 
             AdminController::class => new AdminController(

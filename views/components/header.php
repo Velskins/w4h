@@ -16,54 +16,28 @@ $publicPages = [
 $isLoggedIn = isset($_SESSION['user_id']);
 
 $dashboardLink = '/citizen/dashboard';
+
 if ($isLoggedIn && isset($_SESSION['user_role'])) {
     $roles = json_decode($_SESSION['user_role'], true);
-    if (is_array($roles) && in_array('ROLE_ADMIN', $roles)) {
-        $dashboardLink = '/admin';
+
+    if (is_array($roles)) {
+        if (in_array('ROLE_ADMIN', $roles)) {
+            $dashboardLink = '/admin';
+        } elseif (in_array('ROLE_HERO', $roles)) {
+            $dashboardLink = '/hero/dashboard';
+        }
     }
 }
 
 $showAuthButtons = in_array($currentPath, $publicPages) && !$isLoggedIn;
 ?>
 
-<style>
-    .hover-opacity-100:hover {
-        opacity: 1 !important;
-        transition: opacity 0.3s ease;
-    }
-
-    .transition-btn {
-        transition: all 0.3s ease;
-    }
-
-    .transition-btn:hover {
-        transform: translateY(-2px);
-    }
-
-    .nav-link-custom {
-        color: rgba(255, 255, 255, 0.75);
-        text-decoration: none;
-        padding: 0 1rem;
-        transition: color 0.3s ease;
-    }
-
-    .nav-link-custom:hover {
-        color: #fff;
-    }
-
-    .nav-link-custom.active {
-        color: #fff;
-        font-weight: bold;
-        border-bottom: 2px solid #00d2ff;
-    }
-</style>
-
 <header class="w-100 px-5 py-3"
     style="z-index: 1000; background: linear-gradient(180deg, #172A3D 0%, #222F39 100%); box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
     <div class="d-flex justify-content-between align-items-center">
 
         <div class="header-logo">
-            <a href="/citizen/dashboard">
+            <a href="<?= $isLoggedIn ? $dashboardLink : '/' ?>">
                 <img src="/../public/assets/DA/logo.svg" alt="Web4Heroes Logo" style="height: 60px;">
             </a>
         </div>
