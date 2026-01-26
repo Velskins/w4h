@@ -15,6 +15,14 @@ $publicPages = [
 
 $isLoggedIn = isset($_SESSION['user_id']);
 
+$dashboardLink = '/citizen/dashboard';
+if ($isLoggedIn && isset($_SESSION['user_role'])) {
+    $roles = json_decode($_SESSION['user_role'], true);
+    if (is_array($roles) && in_array('ROLE_ADMIN', $roles)) {
+        $dashboardLink = '/admin';
+    }
+}
+
 $showAuthButtons = in_array($currentPath, $publicPages) && !$isLoggedIn;
 ?>
 
@@ -31,6 +39,23 @@ $showAuthButtons = in_array($currentPath, $publicPages) && !$isLoggedIn;
     .transition-btn:hover {
         transform: translateY(-2px);
     }
+
+    .nav-link-custom {
+        color: rgba(255, 255, 255, 0.75);
+        text-decoration: none;
+        padding: 0 1rem;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link-custom:hover {
+        color: #fff;
+    }
+
+    .nav-link-custom.active {
+        color: #fff;
+        font-weight: bold;
+        border-bottom: 2px solid #00d2ff;
+    }
 </style>
 
 <header class="w-100 px-5 py-3"
@@ -38,21 +63,45 @@ $showAuthButtons = in_array($currentPath, $publicPages) && !$isLoggedIn;
     <div class="d-flex justify-content-between align-items-center">
 
         <div class="header-logo">
-            <a href="/">
+            <a href="/citizen/dashboard">
                 <img src="/../public/assets/DA/logo.svg" alt="Web4Heroes Logo" style="height: 60px;">
             </a>
         </div>
 
-        <nav class="d-none d-lg-flex gap-5 text-uppercase small" style="letter-spacing: 1px;">
-            <a href="#" class="text-white text-decoration-none opacity-75 px-3 hover-opacity-100">Comment ça marche
-                ?</a>
-            <a href="#" class="text-white text-decoration-none opacity-75 px-3 hover-opacity-100">Recherche</a>
-            <a href="#" class="text-white text-decoration-none opacity-75 px-3 hover-opacity-100">Super-héros</a>
+        <nav class="d-none d-lg-flex gap-4 text-uppercase small" style="letter-spacing: 1px;">
+
+            <?php if ($isLoggedIn): ?>
+                <a href="<?= $dashboardLink ?>"
+                    class="nav-link-custom <?= $currentPath === $dashboardLink ? 'active' : '' ?>">
+                    Dashboard
+                </a>
+                <a href="/incident" class="nav-link-custom <?= str_contains($currentPath, '/incident') ? 'active' : '' ?>">
+                    Incidents
+                </a>
+                <a href="/contact" class="nav-link-custom <?= $currentPath === '/contact' ? 'active' : '' ?>">
+                    Contact
+                </a>
+                <a href="/profile" class="nav-link-custom <?= str_contains($currentPath, '/profile') ? 'active' : '' ?>">
+                    Profil
+                </a>
+
+            <?php else: ?>
+                <a href="/#how-it-works" class="nav-link-custom hover-opacity-100">
+                    Comment ça marche ?
+                </a>
+                <a href="/#search" class="nav-link-custom hover-opacity-100">
+                    Recherche
+                </a>
+                <a href="/#heroes" class="nav-link-custom hover-opacity-100">
+                    Super-héros
+                </a>
+            <?php endif; ?>
+
         </nav>
 
         <div class="d-flex gap-2" style="min-width: 200px; justify-content: flex-end;">
 
-            <?php if ($showAuthButtons): ?>
+            <?php if (!$isLoggedIn): ?>
                 <a href="/login" class="btn btn-outline-light rounded-pill px-4 btn-sm transition-btn">
                     Connexion
                 </a>
@@ -61,13 +110,15 @@ $showAuthButtons = in_array($currentPath, $publicPages) && !$isLoggedIn;
                     Inscription
                 </a>
 
-            <?php elseif ($isLoggedIn): ?>
+            <?php else: ?>
                 <div class="d-flex align-items-center gap-3">
-                    <span class="text-white small opacity-75 d-none d-md-block">
-                        Bonjour, <?= htmlspecialchars($_SESSION['user_firstname'] ?? 'Héros') ?>
+                    <span class="text-white small opacity-75 d-none d-md-block text-end">
+                        Bonjour, <span
+                            class="fw-bold text-white"><?= htmlspecialchars($_SESSION['user_firstname'] ?? 'Héros') ?></span>
                     </span>
-                    <a href="/logout" class="btn btn-outline-danger rounded-pill px-4 btn-sm transition-btn">
-                        Déconnexion
+                    <a href="/logout" class="btn btn-outline-danger rounded-pill px-4 btn-sm transition-btn"
+                        title="Se déconnecter">
+                        <i class="bi bi-power"></i>
                     </a>
                 </div>
             <?php endif; ?>
