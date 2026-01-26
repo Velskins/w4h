@@ -20,6 +20,8 @@ return function (Router $router) {
     $router->get('/profile/edit', [UserController::class, 'editProfile']);
     $router->post('/profile/edit', [UserController::class, 'handleEditProfile']);
 
+    $router->post('/user/heroes', [UserController::class, 'heroes']);
+
 
     $router->get('/incident', [IncidentController::class, 'index']);
     $router->get('/incident/show', [IncidentController::class, 'show']);
@@ -36,6 +38,8 @@ return function (Router $router) {
     $router->get('/admin/incidents', [AdminController::class, 'listIncidents']);
     $router->post('/admin/incident/validate', [AdminController::class, 'validateIncident']);
     $router->post('/admin/hero/validate', [AdminController::class, 'validateHero']);
+
+    $router->get('/heroes', [UserController::class, 'heroes']);
 
 
 
