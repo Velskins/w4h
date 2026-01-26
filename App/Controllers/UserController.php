@@ -94,8 +94,9 @@ final class UserController extends Controller
         ];
 
         $this->users->create($data);
+$message = "Inscription réussie ! Vous allez être redirigé vers la page de connexion...";
 
-        return Response::redirect('/login');
+        return Response::redirect ('/login');
     }
 
 
@@ -204,4 +205,32 @@ final class UserController extends Controller
 
         return Response::redirect('/profile');
     }
+
+    public function heroes(): Response
+    {
+        $heroes = $this->users->findHeroes();
+
+        return $this->view('user/heroes', [
+            'title' => 'Liste des héros',
+            'heroes' => $heroes
+        ]);
+    }
+
+
+    public function showProfile(): Response
+    {
+        $id = (int) $this->request->query('id');
+        $hero = $this->users->findOneById($id);
+
+        if (!$hero) {
+            return new Response('Héros introuvable', 404);
+        }
+
+        return $this->view('user/show_profile', [
+            'title' => 'Profil du héros',
+            'hero' => $hero
+        ]);
+    }
+
+
 }

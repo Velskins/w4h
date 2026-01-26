@@ -1,140 +1,94 @@
-<?php
-$bgLeft = '/assets/background/ironman_bg.jpg';
-$bgRight = '/assets/background/captain_bg.jpg';
-?>
+<form action="/register" method="POST" class="split-screen-form">
 
-<div class="d-flex w-100 min-vh-100">
+    <div class="panel left-panel">
+        <div class="panel-content">
+            <h1>Inscription</h1>
 
-    <div class="row g-0 w-100">
+            <?php if (isset($error)): ?>
+                <div style="color: red; background: rgba(255,0,0,0.1); padding: 10px; border-radius: 10px; margin-bottom: 20px;">
+                    <?= htmlspecialchars($error) ?>
+                </div>
+            <?php endif; ?>
 
-        <div class="col-lg-6 position-relative d-flex align-items-center justify-content-center p-5">
+            <label class="section-label">Informations personnelles <span class="required-star">*</span></label>
 
-            <div class="position-absolute top-0 start-0 w-100 h-100"
-                style="background: url('<?= $bgLeft ?>') center/cover no-repeat; z-index: 0;"></div>
+            <div class="input-row">
+                <select name="gender" required>
+                    <option value="" disabled selected>Civilité</option>
+                    <option value="Male">Monsieur</option>
+                    <option value="Femelle">Madame</option>
+                    <option value="other">Autre</option>
+                </select>
+            </div>
 
-            <div class="position-absolute top-0 start-0 w-100 h-100"
-                style="background: rgba(255, 255, 255, 0.85); z-index: 1;"></div>
+            <div class="input-row">
+                <input type="text" name="lastname" placeholder="Nom" required>
+                <input type="text" name="firstname" placeholder="Prénom" required>
+            </div>
 
-            <div class="position-relative w-100" style="z-index: 2; max-width: 500px; color: #162435;">
+            <div class="input-row">
+                <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" name="birthdate" placeholder="Date de naissance">
+            </div>
 
-                <h1 class="display-4 fw-bold mb-5 text-uppercase" style="letter-spacing: 2px;">Inscription</h1>
+            <div class="input-row">
+                <input type="email" name="email" placeholder="Adresse Email" required>
+            </div>
 
-                <?php if (isset($error)): ?>
-                    <div class="alert alert-danger border-0 shadow-sm mb-4">
-                        <?= htmlspecialchars($error) ?>
-                    </div>
-                <?php endif; ?>
+            <label class="section-label" style="margin-top: 20px;">Informations complémentaires</label>
 
-                <form action="/register" method="POST" id="registerForm">
+            <div class="input-row">
+                <input type="tel" name="phone" placeholder="N° de portable">
+            </div>
 
-                    <h5 class="fw-bold text-uppercase text-secondary mb-4 small" style="letter-spacing: 1px;">
-                        Informations personnelles</h5>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small">Civilité</label>
-                        <select name="gender" class="form-select border-0 shadow-sm py-2 bg-white">
-                            <option value="other">Autre</option>
-                            <option value="Male">Homme</option>
-                            <option value="Femelle">Femme</option>
-                        </select>
-                    </div>
-
-                    <div class="row g-3 mb-3">
-                        <div class="col-6">
-                            <label class="form-label fw-bold small">Nom *</label>
-                            <input type="text" name="lastname" class="form-control border-0 shadow-sm py-2" required
-                                placeholder="Stark">
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label fw-bold small">Prénom *</label>
-                            <input type="text" name="firstname" class="form-control border-0 shadow-sm py-2" required
-                                placeholder="Tony">
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small">Date de naissance</label>
-                        <input type="date" name="birthdate" class="form-control border-0 shadow-sm py-2">
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label fw-bold small">N° de portable</label>
-                        <input type="text" name="phone" class="form-control border-0 shadow-sm py-2"
-                            placeholder="06 12 34 56 78">
-                    </div>
-
+            <div style="margin-top: 10px; color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" name="is_hero" value="1" style="width: auto; margin:0;">
+                <label>Je souhaite devenir un <strong>Héros</strong></label>
             </div>
         </div>
-
-        <div class="col-lg-6 position-relative d-flex align-items-center justify-content-center p-5 text-white">
-
-            <div class="position-absolute top-0 start-0 w-100 h-100"
-                style="background: url('<?= $bgRight ?>') center/cover no-repeat; z-index: 0;"></div>
-
-            <div class="position-absolute top-0 start-0 w-100 h-100"
-                style="background: linear-gradient(135deg, rgba(11, 22, 34, 0.95) 0%, rgba(20, 40, 60, 0.8) 100%); z-index: 1;">
-            </div>
-
-            <div class="position-relative w-100" style="z-index: 2; max-width: 500px;">
-
-                <h5 class="fw-bold text-uppercase mb-4 small" style="color: #00d2ff; letter-spacing: 1px;">Coordonnées *
-                </h5>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-4">
-                        <label class="form-label small opacity-75">N° Rue</label>
-                        <input type="number" name="street_number" class="form-control border-0 py-2">
-                    </div>
-                    <div class="col-8">
-                        <label class="form-label small opacity-75">Complément</label>
-                        <input type="text" name="complement_number" class="form-control border-0 py-2">
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label small opacity-75">Nom de rue</label>
-                    <input type="text" name="street" class="form-control border-0 py-2">
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-6">
-                        <label class="form-label small opacity-75">Ville</label>
-                        <input type="text" name="city" class="form-control border-0 py-2">
-                    </div>
-                    <div class="col-6">
-                        <label class="form-label small opacity-75">Code Postal</label>
-                        <input type="number" name="zipcode" class="form-control border-0 py-2">
-                    </div>
-                </div>
-
-                <h5 class="fw-bold text-uppercase mb-4 small" style="color: #ff4757; letter-spacing: 1px;">Sécurité *
-                </h5>
-
-                <div class="mb-3">
-                    <label class="form-label small opacity-75">Email</label>
-                    <input type="email" name="email" class="form-control border-0 py-2" required
-                        placeholder="heros@avengers.com">
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label small opacity-75">Mot de passe</label>
-                    <input type="password" name="pwd" class="form-control border-0 py-2" required>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top border-secondary">
-                    <p class="mb-0 small opacity-75">
-                        Déjà inscrit ? <a href="/login" class="text-white text-decoration-underline">Se connecter</a>
-                    </p>
-
-                    <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 fw-bold shadow text-uppercase"
-                        style="background: linear-gradient(90deg, #103050 0%, #205080 100%); border: 1px solid rgba(255,255,255,0.2);">
-                        Inscription
-                    </button>
-                </div>
-
-                </form>
-            </div>
-        </div>
-
     </div>
-</div>
+
+    <div class="panel right-panel">
+        <div class="panel-content">
+
+            <label class="section-label">Coordonnées <span class="required-star">*</span></label>
+
+            <div class="input-row">
+                <input type="number" name="street_number" placeholder="N°" style="flex: 0 0 80px;">
+                <input type="text" name="street" placeholder="Nom de la voie">
+            </div>
+
+            <div class="input-row">
+                <input type="text" name="complement_number" placeholder="Complément (facultatif)">
+            </div>
+
+            <div class="input-row">
+                <input type="text" name="city" placeholder="Ville">
+                <input type="number" name="zipcode" placeholder="Code Postal">
+            </div>
+
+            <div class="input-row">
+                <select name="country">
+                    <option value="France">France</option>
+                    <option value="Belgique">Belgique</option>
+                    <option value="Suisse">Suisse</option>
+                    <option value="USA">États-Unis</option>
+                </select>
+            </div>
+
+            <label class="section-label" style="margin-top: 30px;">Sécurité <span class="required-star">*</span></label>
+
+            <div class="input-row">
+                <input type="password" name="pwd" placeholder="Mot de passe" required>
+                <input type="password" name="pwd_confirm" placeholder="Confirmation">
+            </div>
+
+            <button type="submit" class="submit-btn">Inscription</button>
+
+            <div class="login-link">
+                Vous avez déjà un compte ? <a href="/login">Connectez-vous</a>
+            </div>
+
+        </div>
+    </div>
+
+</form>

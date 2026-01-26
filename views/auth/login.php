@@ -1,22 +1,19 @@
-<style>
-    .form_login  {
-        margin-top: 300px;
-    }
-</style>
-<h2>
-    <?= htmlspecialchars($title) ?>
-</h2>
+<main class="login">
+    <div class="login-content">
+        <h1>Connexion</h1>
 
-<form action="/login" method="POST" class="form_login">
+        <form action="/login" method="POST">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="pwd" placeholder="Mot de passe" required>
 
-    <label>Email :</label><br>
-    <input type="email" name="email" required><br><br>
+            <a href="/forgot-password" class="forgot">Mot de passe oublié ?</a>
 
-    <label>Mot de passe :</label><br>
-    <input type="password" name="pwd" required><br><br>
+            <button type="submit">Connexion</button>
+        </form>
 
-    <button type="submit">Se connecter</button>
-</form>
-
-<p>Pas encore inscrit ? <a href="/register">S'inscrire</a></p>
-
+        <p class="signup">
+            Vous n'êtes pas encore protégé ?
+            <a href="/register">Inscrivez-vous !</a>
+        </p>
+    </div>
+</main>
