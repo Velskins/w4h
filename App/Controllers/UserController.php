@@ -20,8 +20,6 @@ final class UserController extends Controller
         $this->users = $users;
     }
 
-
-
     public function profile(): Response
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -40,11 +38,9 @@ final class UserController extends Controller
 
         return $this->view('user/profile', [
             'title' => 'Mon Profil',
-            'user'  => $user
+            'user' => $user
         ]);
     }
-
-
 
     public function register(): Response
     {
@@ -55,11 +51,11 @@ final class UserController extends Controller
 
     public function handleRegister(): Response
     {
-        $email     = trim((string) $this->request->input('email'));
-        $pwd       = (string) $this->request->input('pwd');
-        $lastname  = trim((string) $this->request->input('lastname'));
+        $email = trim((string) $this->request->input('email'));
+        $pwd = (string) $this->request->input('pwd');
+        $lastname = trim((string) $this->request->input('lastname'));
         $firstname = trim((string) $this->request->input('firstname'));
-        $isHero    = $this->request->input('is_hero');
+        $isHero = $this->request->input('is_hero');
 
         if (empty($email) || empty($pwd) || empty($lastname) || empty($firstname)) {
             return $this->view('auth/register', [
@@ -78,28 +74,25 @@ final class UserController extends Controller
         $role = $isHero ? ['ROLE_HERO_PENDING'] : ['ROLE_CITIZEN'];
 
         $data = [
-            'email'        => $email,
-            'pwd'          => password_hash($pwd, PASSWORD_DEFAULT),
-            'lastname'     => $lastname,
-            'firstname'    => $firstname,
-            'gender'       => $this->request->input('gender') ?? 'other',
-            'birthdate'    => $this->request->input('birthdate'),
+            'email' => $email,
+            'pwd' => password_hash($pwd, PASSWORD_DEFAULT),
+            'lastname' => $lastname,
+            'firstname' => $firstname,
+            'gender' => $this->request->input('gender') ?? 'other',
+            'birthdate' => $this->request->input('birthdate'),
             'phone' => $this->request->input('phone') ?: '0000000000',
             'street_number' => $this->request->input('street_number') ?: 0,
             'complement_number' => $this->request->input('complement_number') ?: '',
             'street' => $this->request->input('street') ?: '',
             'zipcode' => $this->request->input('zipcode') ?: 0,
             'city' => $this->request->input('city') ?: '',
-            'role'         => json_encode($role)
+            'role' => json_encode($role)
         ];
 
         $this->users->create($data);
-$message = "Inscription réussie ! Vous allez être redirigé vers la page de connexion...";
 
-        return Response::redirect ('/login');
+        return Response::redirect('/login');
     }
-
-
 
     public function login(): Response
     {
@@ -111,7 +104,7 @@ $message = "Inscription réussie ! Vous allez être redirigé vers la page de co
     public function handleLogin(): Response
     {
         $email = trim((string) $this->request->input('email'));
-        $pwd   = (string) $this->request->input('pwd');
+        $pwd = (string) $this->request->input('pwd');
 
         $user = $this->users->findOneByEmail($email);
 
@@ -120,11 +113,22 @@ $message = "Inscription réussie ! Vous allez être redirigé vers la page de co
                 session_start();
             }
 
-            $_SESSION['user_id']        = $user['id'];
+            $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_firstname'] = $user['firstname'];
-            $_SESSION['user_role']      = $user['role'];
+            $_SESSION['user_role'] = $user['role'];
 
-            return Response::redirect('/citizen/dashboard');
+            $roles = json_decode($user['role'], true);
+            $redirectUrl = '/citizen/dashboard';
+
+            if (is_array($roles)) {
+                if (in_array('ROLE_ADMIN', $roles)) {
+                    $redirectUrl = '/admin';
+                } elseif (in_array('ROLE_HERO', $roles)) {
+                    $redirectUrl = '/hero/dashboard';
+                }
+            }
+
+            return Response::redirect($redirectUrl);
         }
 
         return $this->view('auth/login', [
@@ -132,8 +136,6 @@ $message = "Inscription réussie ! Vous allez être redirigé vers la page de co
             'title' => 'Connexion'
         ], 401);
     }
-
-
 
     public function logout(): Response
     {
@@ -145,8 +147,6 @@ $message = "Inscription réussie ! Vous allez être redirigé vers la page de co
 
         return Response::redirect('/login');
     }
-
-
 
     public function editProfile(): Response
     {
@@ -163,7 +163,7 @@ $message = "Inscription réussie ! Vous allez être redirigé vers la page de co
 
         return $this->view('user/edit_profile', [
             'title' => 'Éditer mon profil',
-            'user'  => $user
+            'user' => $user
         ]);
     }
 
@@ -184,21 +184,21 @@ $message = "Inscription réussie ! Vous allez être redirigé vers la page de co
         }
 
         $data = [
-            'email'        => trim((string) $this->request->input('email')),
-            'firstname'    => trim((string) $this->request->input('firstname')),
-            'lastname'     => trim((string) $this->request->input('lastname')),
-            'gender'       => $this->request->input('gender') ?? 'other',
-            'birthdate'    => $this->request->input('birthdate'),
-            'phone'        => $this->request->input('phone') ?? '',
-            'street_number'=> $this->request->input('street_number') ?? null,
+            'email' => trim((string) $this->request->input('email')),
+            'firstname' => trim((string) $this->request->input('firstname')),
+            'lastname' => trim((string) $this->request->input('lastname')),
+            'gender' => $this->request->input('gender') ?? 'other',
+            'birthdate' => $this->request->input('birthdate'),
+            'phone' => $this->request->input('phone') ?? '',
+            'street_number' => $this->request->input('street_number') ?? null,
             'complement_number' => $this->request->input('complement_number') ?? null,
-            'street'       => $this->request->input('street') ?? '',
-            'zipcode'      => $this->request->input('zipcode') ?? null,
-            'city'         => $this->request->input('city') ?? '',
+            'street' => $this->request->input('street') ?? '',
+            'zipcode' => $this->request->input('zipcode') ?? null,
+            'city' => $this->request->input('city') ?? '',
 
 
-            'pwd'          => $existingUser['pwd'],
-            'role'         => $existingUser['role']
+            'pwd' => $existingUser['pwd'],
+            'role' => $existingUser['role']
         ];
 
         $this->users->update((int) $userId, $data);
@@ -216,7 +216,6 @@ $message = "Inscription réussie ! Vous allez être redirigé vers la page de co
         ]);
     }
 
-
     public function showProfile(): Response
     {
         $id = (int) $this->request->query('id');
@@ -231,6 +230,4 @@ $message = "Inscription réussie ! Vous allez être redirigé vers la page de co
             'hero' => $hero
         ]);
     }
-
-
 }
