@@ -11,7 +11,7 @@ body {
     color: var(--text-color);
 }
 
-/*HEADER*/
+/**HEADER***/
     .hover-opacity-100:hover {
         opacity: 1 !important;
         transition: opacity 0.3s ease;
@@ -42,7 +42,7 @@ body {
         border-bottom: 2px solid #00d2ff;
     }
 
-/*ADMIN*/
+
 .admin-card {
     background: rgba(33, 37, 41, 0.8);
     backdrop-filter: blur(10px);
@@ -63,3 +63,229 @@ body {
 }
 
 
+/* ****************  REGISTER ***************************** */
+
+
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+.overlay-light,
+.overlay-dark {
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+}
+
+
+.panel {
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 28px;
+    padding: 3rem;
+    box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    animation: fadeUp 0.8s ease forwards;
+}
+
+.col-lg-6.text-white .panel {
+    background: rgba(15, 30, 45, 0.65);
+}
+
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.form-control,
+.form-select {
+    border-radius: 14px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.85);
+    transition: all 0.25s ease;
+}
+
+.col-lg-6.text-white .form-control,
+.col-lg-6.text-white .form-select {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+.form-control::placeholder {
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.col-lg-6.text-white .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.35);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+
+label {
+    letter-spacing: 0.4px;
+}
+
+
+.btn-primary {
+    background: linear-gradient(90deg, #0f3050 0%, #205080 100%);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+}
+
+.btn-primary:active {
+    transform: translateY(0) scale(0.98);
+}
+
+
+a {
+    transition: opacity 0.2s ease;
+}
+
+a:hover {
+    opacity: 0.85;
+}
+
+
+h1,
+h5 {
+    text-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+
+.border-top {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+
+.alert {
+    border-radius: 14px;
+}
+
+
+
+@media (max-width: 992px) {
+    .panel {
+        padding: 2rem;
+        border-radius: 22px;
+    }
+}
+
+/***** LOGIN ********/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+.login {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background-image: url("/public/assets/DA/iron4k.jpg"); /* image locale */
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+
+.login::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: rgba(230, 220, 215, 0.85);
+    z-index: 1;
+}
+
+
+.login-content {
+    position: absolute;
+    top: 50%;
+    right: 8%;
+    transform: translateY(-50%);
+    width: 320px;
+    z-index: 2;
+    text-align: left;
+}
+
+
+.login-content h1 {
+    margin-bottom: 30px;
+    font-size: 26px;
+    color: #2c3e50;
+    letter-spacing: 1px;
+}
+
+
+.login-content input {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+
+.forgot {
+    display: block;
+    margin-bottom: 22px;
+    font-size: 12px;
+    color: #5d6d7e;
+    text-decoration: none;
+}
+
+
+.login-content button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    background: linear-gradient(to bottom, #2c4d73, #1f3552);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+.signup {
+    margin-top: 26px;
+    font-size: 12px;
+    color: #34495e;
+}
+
+.signup a {
+    color: #2c4d73;
+    font-weight: 600;
+    text-decoration: none;
+}
