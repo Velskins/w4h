@@ -8,13 +8,36 @@
     <title>Web 4 Heroes</title>
 </head>
 <body>
-<?php  require __DIR__ . '/components/sideBar.php'; ?> 
 <?php include __DIR__ . "/components/header.php"; ?>
+
 <main>
-    <?php include $viewFile; ?>
+   <?php if (isset($view) && file_exists($view)) {
+    require $view;
+    } else {
+    echo "<p>Vue introuvable.</p>";
+    }
+    ?>
 </main>
 <?php include __DIR__ . "/components/footer.php"; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const searchInput = document.querySelector('.search-input');
+    const heroCards = document.querySelectorAll('.hero-card');
+
+    searchInput.addEventListener('input', function() {
+        const filter = this.value.toLowerCase().trim();
+
+        heroCards.forEach(card => {
+            const heroName = card.querySelector('.hero-name').textContent.toLowerCase();
+            if (heroName.includes(filter)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

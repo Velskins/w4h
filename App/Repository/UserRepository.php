@@ -16,18 +16,14 @@ final class UserRepository
 
     public function findAll(): array
     {
-        $stmt = $this->pdo->prepare("
-            SELECT * FROM users ORDER BY id ASC
-        ");
+        $stmt = $this->pdo->prepare("SELECT * FROM users ORDER BY id ASC");
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
     public function findOneById(int $id): ?array
     {
-        $stmt = $this->pdo->prepare("
-            SELECT * FROM users WHERE id = :id LIMIT 1
-        ");
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = :id LIMIT 1");
         $stmt->execute([':id' => $id]);
         $row = $stmt->fetch();
         return $row ?: null;
@@ -35,9 +31,7 @@ final class UserRepository
 
     public function findOneByEmail(string $email): ?array
     {
-        $stmt = $this->pdo->prepare("
-            SELECT * FROM users WHERE email = :email LIMIT 1
-        ");
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
         $stmt->execute([':email' => $email]);
         $row = $stmt->fetch();
         return $row ?: null;
@@ -47,11 +41,11 @@ final class UserRepository
     {
         $stmt = $this->pdo->prepare("
             INSERT INTO users (
-                email, pwd, lastname, firstname, gender, birthdate, phone, 
+                email, pwd, lastname, firstname, gender, birthdate, phone,
                 street_number, complement_number, street, zipcode, city, role
             )
             VALUES (
-                :email, :pwd, :lastname, :firstname, :gender, :birthdate, :phone, 
+                :email, :pwd, :lastname, :firstname, :gender, :birthdate, :phone,
                 :street_number, :complement_number, :street, :zipcode, :city, :role
             )
         ");
@@ -115,10 +109,35 @@ final class UserRepository
         return $stmt->rowCount() > 0;
     }
 
+    public function updateRole(int $id, string $jsonRole): bool
+    {
+        $stmt = $this->pdo->prepare("UPDATE users SET role = :role WHERE id = :id");
+        return $stmt->execute([
+            ':role' => $jsonRole,
+            ':id' => $id
+        ]);
+    }
+
     public function delete(int $id): bool
     {
         $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
         $stmt->execute([':id' => $id]);
         return $stmt->rowCount() > 0;
     }
+
+    public function findHeroes(): array
+    {
+        $stmt = $this->pdo->prepare("
+        SELECT id, firstname, lastname, email, city
+        FROM users
+        WHERE JSON_CONTAINS(role, '\"ROLE_HERO\"')
+           OR JSON_CONTAINS(role, '\"ROLE_HERO_PENDING\"')
+        ORDER BY lastname ASC
+    ");
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
 }
+
