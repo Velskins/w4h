@@ -18,6 +18,7 @@ final class View
         extract($data, EXTR_SKIP);
 
         ob_start();
+
         if (file_exists($layout)) {
             $view = $viewFile;
             require $layout;
