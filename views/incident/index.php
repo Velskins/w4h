@@ -1,14 +1,8 @@
-<div class="container py-5">
+<div class="container py-5 min-vh-100">
     
     <div class="text-center mb-5">
         <h1 class="display-4 fw-bold text-uppercase text-black" style="letter-spacing: 2px;">Incidents en cours</h1>
         <p class="lead text-black-50">Restez informés des interventions de nos super-héros près de chez vous.</p>
-    </div>
-
-    <div class="d-flex justify-content-center gap-3 mb-5">
-        <button class="btn btn-outline-light rounded-pill px-4 active">Tous</button>
-        <button class="btn btn-outline-danger rounded-pill px-4">Urgences</button>
-        <button class="btn btn-outline-info rounded-pill px-4">En cours</button>
     </div>
 
     <div class="row g-4">

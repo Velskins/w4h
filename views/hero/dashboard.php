@@ -1,8 +1,9 @@
-<div class="container-fluid p-4">
-    
+<div class="container-fluid p-4 hero-dashboard-bg">
+
     <div class="row mb-5">
         <div class="col-12">
-            <div class="admin-card p-4 text-white d-flex align-items-center gap-4" style="background: linear-gradient(90deg, #162435 0%, #1f3a52 100%); border-left: 5px solid #ffc107;">
+            <div class="admin-card p-4 text-white d-flex align-items-center gap-4" 
+                 style="background: linear-gradient(90deg, #162435 0%, #1f3a52 100%); border-left: 5px solid #ffc107; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
                 
                 <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid #fff;">
                     <img src="<?= htmlspecialchars($hero['photo_path'] ?: '/assets/images/default_hero.png') ?>" 
@@ -26,105 +27,137 @@
         </div>
     </div>
 
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="kpi-card d-flex flex-column justify-content-between p-3 h-100">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="display-5 fw-bold text-white"><?= count($my_interventions) ?></span>
+                    <i class="bi bi-bell-fill text-secondary fs-1 opacity-25"></i>
+                </div>
+                <span class="text-white-50 small text-uppercase">interventions sur des incidents</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="kpi-card d-flex flex-column justify-content-between p-3 h-100">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="display-5 fw-bold text-white">0</span>
+                    <i class="bi bi-person-badge-fill text-info fs-1 opacity-25"></i>
+                </div>
+                <span class="text-white-50 small text-uppercase">super-vilains mis en prison</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="kpi-card d-flex flex-column justify-content-between p-3 h-100">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="display-5 fw-bold text-white">4.8</span>
+                    <i class="bi bi-hand-thumbs-up-fill text-primary fs-1 opacity-25"></i>
+                </div>
+                <span class="text-white-50 small text-uppercase">en réputation par les citoyens</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="kpi-card d-flex flex-column justify-content-between p-3 h-100">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="display-5 fw-bold text-white">0</span>
+                    <i class="bi bi-film text-warning fs-1 opacity-25"></i>
+                </div>
+                <span class="text-white-50 small text-uppercase">films en tant qu'acteur</span>
+            </div>
+        </div>
+    </div>
+
     <div class="row g-4">
         
-        <div class="col-lg-7">
-            <div class="admin-card p-4 h-100">
-                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
-                    <h2 class="h4 text-uppercase text-danger mb-0">
-                        <i class="bi bi-broadcast me-2 animate-pulse"></i>Alertes Prioritaires
-                    </h2>
-                    <span class="badge bg-danger rounded-pill"><?= count($available_incidents) ?></span>
-                </div>
-
-                <?php if (empty($available_incidents)): ?>
-                    <div class="text-center py-5 text-muted opacity-50">
-                        <i class="bi bi-shield-check display-1"></i>
-                        <p class="mt-3">Aucun incident signalé. La ville est calme... pour le moment.</p>
-                    </div>
-                <?php else: ?>
-                    <div class="d-flex flex-column gap-3">
-                        <?php foreach ($available_incidents as $incident): ?>
-                            <div class="p-3 rounded border border-secondary bg-dark text-white position-relative overflow-hidden">
-                                <div class="position-absolute top-0 start-0 bottom-0" style="width: 5px; background-color: <?= $incident['priority'] === 'Haute' ? '#dc3545' : ($incident['priority'] === 'Moyenne' ? '#ffc107' : '#0dcaf0') ?>;"></div>
-                                
-                                <div class="d-flex justify-content-between align-items-start ps-2">
-                                    <div>
-                                        <div class="d-flex align-items-center gap-2 mb-1">
-                                            <span class="badge bg-secondary"><?= htmlspecialchars($incident['type']) ?></span>
-                                            <span class="small text-muted"><i class="bi bi-clock me-1"></i><?= date('H:i', strtotime($incident['date'])) ?></span>
-                                        </div>
-                                        <h3 class="h5 fw-bold mb-1"><?= htmlspecialchars($incident['title']) ?></h3>
-                                        <p class="mb-2 text-white-50 small"><?= htmlspecialchars($incident['city']) ?> (<?= htmlspecialchars($incident['zipcode']) ?>)</p>
-                                        <p class="mb-0 small text-truncate" style="max-width: 400px;"><?= htmlspecialchars($incident['description']) ?></p>
-                                    </div>
-
-                                    <form action="/hero/take" method="POST">
-                                        <input type="hidden" name="incident_id" value="<?= $incident['id'] ?>">
-                                        <button type="submit" class="btn btn-warning fw-bold text-uppercase btn-sm shadow-sm">
-                                            <i class="bi bi-lightning-charge-fill me-1"></i>Intervenir
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
+        <div class="col-lg-8">
+            <h2 class="h5 fw-bold text-white mb-3 text-uppercase">Incidents en cours</h2>
+            
+            <div class="table-responsive rounded-3 overflow-hidden">
+                <table class="table table-dark mb-0 custom-table align-middle">
+                    <thead>
+                        <tr class="text-uppercase small" style="background-color: #111923;">
+                            <th class="py-3 ps-4">Type</th>
+                            <th class="py-3">Lieu</th>
+                            <th class="py-3">Super-Vilain</th>
+                            <th class="py-3 text-center">Priorité</th>
+                            <th class="py-3 text-center pe-4">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($available_incidents)): ?>
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-muted" style="background-color: #1F2E3E;">
+                                    <i class="bi bi-cup-hot fs-3 d-block mb-2"></i>
+                                    Aucun incident en cours. Reposez-vous !
+                                </td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($available_incidents as $index => $incident): ?>
+                                <tr class="border-secondary border-opacity-25">
+                                    <td class="ps-4 py-3 fw-bold text-white">
+                                        <?= htmlspecialchars($incident['type']) ?>
+                                    </td>
+                                    <td class="py-3 text-white-50">
+                                        <?= htmlspecialchars($incident['city']) ?>
+                                    </td>
+                                    <td class="py-3 fst-italic text-info">
+                                        <?= htmlspecialchars($incident['villain_name'] ?? 'Inconnu') ?>
+                                    </td>
+                                    <td class="py-3 text-center">
+                                        <?php if ($incident['priority'] === 'Haute'): ?>
+                                            <i class="bi bi-arrow-up-circle-fill text-danger fs-5"></i>
+                                        <?php elseif ($incident['priority'] === 'Moyenne'): ?>
+                                            <i class="bi bi-arrow-right-circle-fill text-warning fs-5"></i>
+                                        <?php else: ?>
+                                            <i class="bi bi-arrow-down-circle-fill text-info fs-5"></i>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="py-3 text-center pe-4">
+                                        <form action="/hero/take" method="POST">
+                                            <input type="hidden" name="incident_id" value="<?= $incident['id'] ?>">
+                                            <button type="submit" class="btn btn-action-go btn-sm px-4 rounded-pill text-uppercase fw-bold">
+                                                GO !
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div class="col-lg-5">
-            <div class="admin-card p-4 h-100">
-                <h2 class="h4 mb-4 text-uppercase border-bottom pb-2 text-info">
-                    <i class="bi bi-journal-text me-2"></i>Journal de Bord
-                </h2>
-
-                <div class="table-responsive">
-                    <table class="table table-borderless table-dark-custom align-middle small">
-                        <thead class="text-secondary text-uppercase">
-                            <tr>
-                                <th>Mission</th>
-                                <th>Statut</th>
-                                <th class="text-end">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (empty($my_interventions)): ?>
-                                <tr><td colspan="3" class="text-center py-4 text-muted">Vous n'avez pas encore effectué de mission.</td></tr>
-                            <?php else: ?>
-                                <?php foreach ($my_interventions as $intervention): ?>
-                                    <tr>
-                                        <td>
-                                            <div class="fw-bold"><?= htmlspecialchars($intervention['title']) ?></div>
-                                            <div class="text-muted"><?= date('d/m/Y', strtotime($intervention['date_open'])) ?></div>
-                                        </td>
-                                        
-                                        <td>
-                                            <?php if ($intervention['status'] === 'En Cours'): ?>
-                                                <span class="badge bg-primary animate-pulse">En Cours</span>
-                                            <?php else: ?>
-                                                <span class="badge bg-success">Terminée</span>
-                                            <?php endif; ?>
-                                        </td>
-
-                                        <td class="text-end">
-                                            <?php if ($intervention['status'] === 'En Cours'): ?>
-                                                <form action="/hero/resolve" method="POST">
-                                                    <input type="hidden" name="intervention_id" value="<?= $intervention['id'] ?>">
-                                                    <input type="hidden" name="incident_id" value="<?= $intervention['incidents_id'] ?>">
-                                                    <button type="submit" class="btn btn-outline-success btn-sm" title="Marquer comme résolu">
-                                                        <i class="bi bi-check-lg me-1"></i>Terminer
-                                                    </button>
-                                                </form>
-                                            <?php else: ?>
-                                                <span class="text-success"><i class="bi bi-trophy-fill"></i></span>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+        <div class="col-lg-4">
+            <h2 class="h5 fw-bold text-white mb-3 text-uppercase">Statistiques</h2>
+            
+            <div class="d-flex flex-column rounded-3 overflow-hidden">
+                <div class="stat-item d-flex align-items-center justify-content-between p-3 bg-dark-row">
+                    <span class="fw-bold text-white fs-5">38 %</span>
+                    <span class="text-white-50 small">Vols en tout genre</span>
+                </div>
+                <div class="stat-item d-flex align-items-center justify-content-between p-3 bg-light-row">
+                    <span class="fw-bold text-white fs-5">13 %</span>
+                    <span class="text-white-50 small">Actes terroristes</span>
+                </div>
+                <div class="stat-item d-flex align-items-center justify-content-between p-3 bg-dark-row">
+                    <span class="fw-bold text-white fs-5">24 %</span>
+                    <span class="text-white-50 small">Invasions extraterrestre</span>
+                </div>
+                 <div class="stat-item d-flex align-items-center justify-content-between p-3 bg-light-row">
+                    <span class="fw-bold text-white fs-5">25 %</span>
+                    <span class="text-white-50 small">Meurtres</span>
+                </div>
+                <div class="stat-item d-flex align-items-center justify-content-between p-3 bg-dark-row border-top border-secondary">
+                    <span class="fw-bold text-white fs-5">294</span>
+                    <span class="text-white-50 small">citoyens secourus</span>
+                </div>
+                <div class="stat-item d-flex align-items-center justify-content-between p-3 bg-light-row">
+                    <span class="fw-bold text-white fs-5">1</span>
+                    <span class="text-white-50 small">Top des meilleurs super-héros</span>
+                </div>
+                 <div class="stat-item d-flex align-items-center justify-content-between p-3 bg-dark-row">
+                    <span class="fw-bold text-white fs-5">18</span>
+                    <span class="text-white-50 small">Premier rôle dans les films</span>
                 </div>
             </div>
         </div>
@@ -133,12 +166,67 @@
 </div>
 
 <style>
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.6; }
-    100% { opacity: 1; }
-}
-.animate-pulse {
-    animation: pulse 2s infinite;
-}
+    .hero-dashboard-bg {
+        background: linear-gradient(rgba(23, 32, 42, 0.2), rgba(23, 32, 42, 0.5)), url('/public/assets/background/Background9.png');
+        
+        background-size: cover;
+        background-position: center top;
+        background-attachment: fixed;
+        min-height: 100vh;
+        
+        margin-top: -1.5rem !important; 
+        margin-bottom: -1.5rem !important;
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    .kpi-card {
+        background-color: #1A2634;
+        border-radius: 8px;
+        min-height: 140px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        transition: transform 0.2s;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    .kpi-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255,255,255,0.2);
+    }
+
+    .custom-table thead th {
+        border: none;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+    .custom-table tbody tr {
+        background-color: #1F2E3E;
+        transition: background-color 0.2s;
+    }
+    .custom-table tbody tr:hover {
+        background-color: #2c3e50;
+    }
+    
+    .btn-action-go {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.3);
+        color: #fff;
+        font-size: 0.8rem;
+        transition: all 0.3s;
+    }
+    .btn-action-go:hover {
+        background: #fff;
+        color: #000;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+
+    .bg-dark-row { background-color: #1A2634; }
+    .bg-light-row { background-color: #243447; }
+    .stat-item {
+        border-left: 4px solid transparent;
+        transition: all 0.2s;
+    }
+    .stat-item:hover {
+        border-left-color: #3498db;
+        background-color: #2c3e50;
+    }
 </style>
