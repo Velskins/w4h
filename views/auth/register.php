@@ -10,7 +10,6 @@ $bgImage = '../public/assets/DA/ppspid.png';
 
         <div class="col-lg-6 position-relative d-flex align-items-center justify-content-center p-5">
 
-            <!-- ioverlay (gauche) -->
             <div class="position-absolute top-0 start-0 w-100 h-100"
                  style="background: rgba(255, 255, 255, 0.45); z-index: 1;"></div>
 
@@ -77,7 +76,6 @@ $bgImage = '../public/assets/DA/ppspid.png';
 
         <div class="col-lg-6 position-relative d-flex align-items-center justify-content-center p-5 text-white">
 
-           <!-- overlay (droite) -->
             <div class="position-absolute top-0 start-0 w-100 h-100"
                  style="background: linear-gradient(
                      135deg,
