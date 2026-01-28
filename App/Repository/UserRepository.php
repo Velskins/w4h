@@ -109,6 +109,12 @@ final class UserRepository
         return $stmt->rowCount() > 0;
     }
 
+    public function updatePassword(int $id, string $hash): bool
+    {
+        $stmt = $this->pdo->prepare("UPDATE users SET pwd = :pwd WHERE id = :id");
+        return $stmt->execute([':pwd' => $hash, ':id' => $id]);
+    }
+
     public function updateRole(int $id, string $jsonRole): bool
     {
         $stmt = $this->pdo->prepare("UPDATE users SET role = :role WHERE id = :id");
@@ -138,6 +144,4 @@ final class UserRepository
 
         return $stmt->fetchAll();
     }
-
 }
-
