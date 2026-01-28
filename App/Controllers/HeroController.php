@@ -16,20 +16,20 @@ final class HeroController extends Controller
     private HeroProfileRepository $heroProfile;
     private UserRepository $users;
     private IncidentRepository $incidents;
-    private InterventionRepository $interventions; 
+    private InterventionRepository $interventions;
 
     public function __construct(
         Request $request,
         HeroProfileRepository $heroProfile,
         UserRepository $users,
         IncidentRepository $incidents,
-        InterventionRepository $interventions 
+        InterventionRepository $interventions
     ) {
         parent::__construct($request);
         $this->heroProfile = $heroProfile;
         $this->users = $users;
         $this->incidents = $incidents;
-        $this->interventions = $interventions; 
+        $this->interventions = $interventions;
     }
 
     public function dashboard(): Response
