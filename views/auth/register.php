@@ -42,6 +42,10 @@
                     <h6 class="auth-section-title mt-4">Complémentaires</h6>
 
                     <div class="mb-3">
+                        <input type="email" name="email" class="form-control auth-input" placeholder="Adresse email" required>
+                    </div>
+
+                    <div class="mb-3">
                         <input type="text" name="phone" class="form-control auth-input" placeholder="N° de portable">
                     </div>
 
