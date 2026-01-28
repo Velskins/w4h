@@ -73,7 +73,6 @@ final class IncidentRepository
             FROM incidents i
             JOIN adresses_incidents a ON i.adresses_incidents_id = a.id
             WHERE i.status = 'Validé'
-            -- On exclut ceux qui sont déjà présents dans la table intervention
             AND i.id NOT IN (SELECT incidents_id FROM intervention)
             ORDER BY i.priority DESC, i.date ASC
         ");
