@@ -110,7 +110,11 @@
 
                 </div>
 
-                <div class="text-end mt-4">
+                <div class="text-end mt-4 d-flex justify-content-between align-items-center">
+
+                    <a href="/profile/edit" class="text-decoration-none">
+                        éditer le profil
+                    </a>
                     <a href="/logout" class="btn btn-outline-secondary">
                         Se déconnecter
                     </a>
