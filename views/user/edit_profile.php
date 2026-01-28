@@ -1,70 +1,186 @@
-<h1><?= htmlspecialchars($title) ?></h1>
+<style>
+    /* PAGE EDIT PROFILE */
+    .edit-profile-page {
+        min-height: 100vh;
+        background-image: url("../../public/assets/DA/profilebackground.jpg");
+        background-size: cover;
+        background-position: center;
+        padding: 40px 20px;
+    }
 
-<form action="/profile/edit" method="POST">
+    /* CARTE FORMULAIRE */
+    .edit-profile-card {
+        background-color: rgba(255, 255, 255, 0.85);
+        border-radius: 14px;
+        border: none;
+        max-width: 1100px;
+    }
 
-    <label>Email</label><br>
-    <input type="email" name="email"
-           value="<?= htmlspecialchars($user['email']) ?>" required>
-    <br><br>
+    /* TITRES */
+    .edit-profile-title {
+        font-size: 2rem;
+        font-weight: 600;
+    }
 
-    <label>Prénom</label><br>
-    <input type="text" name="firstname"
-           value="<?= htmlspecialchars($user['firstname']) ?>" required>
-    <br><br>
+    .section-title {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #6b7280;
+        margin-bottom: 15px;
+    }
 
-    <label>Nom</label><br>
-    <input type="text" name="lastname"
-           value="<?= htmlspecialchars($user['lastname']) ?>" required>
-    <br><br>
+    /* FORM */
+    .form-label {
+        font-weight: 600;
+    }
 
-    <label>Genre</label><br>
-    <select name="gender">
-        <option value="other" <?= $user['gender'] === 'other' ? 'selected' : '' ?>>Autre</option>
-        <option value="Male" <?= $user['gender'] === 'Male' ? 'selected' : '' ?>>Homme</option>
-        <option value="Femelle" <?= $user['gender'] === 'Femelle' ? 'selected' : '' ?>>Femme</option>
-    </select>
-    <br><br>
+    .form-control,
+    .form-select {
+        border-radius: 8px;
+    }
 
-    <label>Date de naissance</label><br>
-    <input type="date" name="birthdate"
-           value="<?= htmlspecialchars($user['birthdate']) ?>">
-    <br><br>
+    /* BOUTONS */
+    .btn-save {
+        padding: 10px 30px;
+        font-weight: 600;
+    }
+</style>
 
-    <label>Téléphone</label><br>
-    <input type="text" name="phone"
-           value="<?= htmlspecialchars($user['phone'] ?? '') ?>">
-    <br><br>
+<div class="container-fluid edit-profile-page">
+    <div class="row justify-content-center">
 
-    <h3>Adresse</h3>
+        <div class="col-12">
 
-    <label>Numéro</label>
-    <input type="number" name="street_number"
-           value="<?= htmlspecialchars($user['street_number'] ?? '') ?>">
-    <br><br>
+            <div class="text-center mb-4">
+                <h1 class="edit-profile-title">
+                    <?= htmlspecialchars($title) ?>
+                </h1>
+            </div>
 
-    <label>Complément</label>
-    <input type="text" name="complement_number"
-           value="<?= htmlspecialchars($user['complement_number'] ?? '') ?>">
-    <br><br>
+            <div class="card edit-profile-card mx-auto p-5">
 
-    <label>Rue</label><br>
-    <input type="text" name="street"
-           value="<?= htmlspecialchars($user['street'] ?? '') ?>">
-    <br><br>
+                <form action="/profile/edit" method="POST">
 
-    <label>Code postal</label>
-    <input type="number" name="zipcode"
-           value="<?= htmlspecialchars($user['zipcode'] ?? '') ?>">
-    <br><br>
+                     <h6 class="section-title">Informations personnelles</h6>
 
-    <label>Ville</label><br>
-    <input type="text" name="city"
-           value="<?= htmlspecialchars($user['city'] ?? '') ?>">
-    <br><br>
+                    <div class="row g-4 mb-4">
 
-    <button type="submit">Enregistrer les modifications</button>
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email"
+                                   class="form-control"
+                                   name="email"
+                                   value="<?= htmlspecialchars($user['email']) ?>"
+                                   required>
+                        </div>
 
-</form>
+                        <div class="col-md-6">
+                            <label class="form-label">Téléphone</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="phone"
+                                   value="<?= htmlspecialchars($user['phone'] ?? '') ?>">
+                        </div>
 
-<br>
-<a href="/profile">← Retour au profil</a>
+                        <div class="col-md-6">
+                            <label class="form-label">Prénom</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="firstname"
+                                   value="<?= htmlspecialchars($user['firstname']) ?>"
+                                   required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Nom</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="lastname"
+                                   value="<?= htmlspecialchars($user['lastname']) ?>"
+                                   required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Genre</label>
+                            <select class="form-select" name="gender">
+                                <option value="other" <?= $user['gender'] === 'other' ? 'selected' : '' ?>>Autre</option>
+                                <option value="Male" <?= $user['gender'] === 'Male' ? 'selected' : '' ?>>Homme</option>
+                                <option value="Femelle" <?= $user['gender'] === 'Femelle' ? 'selected' : '' ?>>Femme</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Date de naissance</label>
+                            <input type="date"
+                                   class="form-control"
+                                   name="birthdate"
+                                   value="<?= htmlspecialchars($user['birthdate']) ?>">
+                        </div>
+
+                    </div>
+
+                     <h2 class="section-title">Adresse</h2>
+
+                    <div class="row g-4 mb-5">
+
+                        <div class="col-md-3">
+                            <label class="form-label">Numéro</label>
+                            <input type="number"
+                                   class="form-control"
+                                   name="street_number"
+                                   value="<?= htmlspecialchars($user['street_number'] ?? '') ?>">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Complément</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="complement_number"
+                                   value="<?= htmlspecialchars($user['complement_number'] ?? '') ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Rue</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="street"
+                                   value="<?= htmlspecialchars($user['street'] ?? '') ?>">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Code postal</label>
+                            <input type="number"
+                                   class="form-control"
+                                   name="zipcode"
+                                   value="<?= htmlspecialchars($user['zipcode'] ?? '') ?>">
+                        </div>
+
+                        <div class="col-md-8">
+                            <label class="form-label">Ville</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="city"
+                                   value="<?= htmlspecialchars($user['city'] ?? '') ?>">
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <a href="/profile" class="text-decoration-none">
+                            ← Retour au profil
+                        </a>
+
+                        <button type="submit" class="btn btn-outline-secondary btn-save">
+                            Enregistrer les modifications
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
