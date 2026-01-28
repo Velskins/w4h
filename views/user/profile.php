@@ -1,57 +1,25 @@
-<<<<<<< HEAD
 <style>
     /* PAGE PROFIL */
     .profile-page {
-        background-color: #f2f4f8;
+        background-image: #f2f4f8;
         min-height: 100vh;
+        padding-left: 260px;
+        overflow-x: hidden;
     }
 
-
-    /* Carte profil */
-    .profile-card {
-        border-radius: 12px;
-        border: none;
-        background-color: #ffffff;
-    }
-
-    /* Titres sections */
-    .section-title {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #6b7280;
-        margin-bottom: 10px;
-    }
-
-    /* Avatar */
-    .profile-avatar {
-        width: 110px;
-        height: 110px;
-        border-radius: 50%;
-        background-color: #d1d5db;
-        display: inline-block;
-    }
-
-    /* PAGE PROFIL */
-    .profile-page {
-        background-color: #f2f4f8;
-        min-height: 100vh;
-    }
-
-    /* Décalage sidebar 260px */
+    /* CONTENU */
     .profile-content {
-        margin-left: 260px;
         padding: 30px;
     }
 
-    /* Carte profil */
+    /* CARTE */
     .profile-card {
+        background-color: #ffffff;
         border-radius: 12px;
         border: none;
-        background-color: #ffffff;
     }
 
-    /* Titres sections */
+    /* TITRES */
     .section-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -60,14 +28,14 @@
         margin-bottom: 10px;
     }
 
-    /* Avatar */
+    /* AVATAR */
     .profile-avatar {
         width: 110px;
         height: 110px;
         border-radius: 50%;
         background-color: #d1d5db;
-        display: inline-block;
     }
+
 </style>
 
 <div class="container-fluid profile-page">
