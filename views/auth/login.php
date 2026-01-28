@@ -23,7 +23,7 @@
                         <input type="email"
                                name="email"
                                class="form-control auth-input"
-                               placeholder="Pseudonyme"
+                               placeholder="email"
                                required>
                     </div>
 
