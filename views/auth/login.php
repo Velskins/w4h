@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="text-end mb-4">
-                        <a href="#" class="auth-link small">Mot de passe oublié ?</a>
+                        <a href="/forgot-password" class="forgot">Mot de passe oublié ?</a>
                     </div>
 
                     <button type="submit" class="btn auth-btn w-100 mb-4">

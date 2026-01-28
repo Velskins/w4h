@@ -1,25 +1,28 @@
 <style>
-
+    /* PAGE PROFIL */
     .profile-page {
-        background-image: #f2f4f8;
+        background-image: url("../../public/assets/DA/profilebackground.jpg");
         min-height: 100vh;
+        background-size:cover;
         padding-left: 260px;
         overflow-x: hidden;
     }
 
-
+    /* CONTENU */
     .profile-content {
         padding: 30px;
     }
 
-
+    /* CARTE */
     .profile-card {
         background-color: #ffffff;
+        opacity: 0.77;
         border-radius: 12px;
         border: none;
+        max-width: 1400px;
     }
 
-
+    /* TITRES */
     .section-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -28,12 +31,21 @@
         margin-bottom: 10px;
     }
 
-
+    /* AVATAR */
     .profile-avatar {
-        width: 110px;
-        height: 110px;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
-        background-color: #d1d5db;
+            background-color: #6b7280;
+            color: white;
+            font-size: 3rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+        }
+
     }
 
 </style>
@@ -58,9 +70,9 @@
                         </h2>
                     </div>
 
-                    <div class="col-md-3 text-md-end text-center">
+                    <div class="col-md-3 text-md-end text-center d-flex justify-content-center align-items-center">
                         <div class="profile-avatar">
-
+                            <?= strtoupper(mb_substr($user['firstname'], 0, 1)); ?>
                         </div>
                     </div>
                 </div>
@@ -98,7 +110,11 @@
 
                 </div>
 
-                <div class="text-end mt-4">
+                <div class="text-end mt-4 d-flex justify-content-between align-items-center">
+
+                    <a href="/profile/edit" class="text-decoration-none">
+                        éditer le profil
+                    </a>
                     <a href="/logout" class="btn btn-outline-secondary">
                         Se déconnecter
                     </a>
