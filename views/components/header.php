@@ -52,8 +52,8 @@ $showAuthButtons = in_array($currentPath, $publicPages) && !$isLoggedIn;
                 <a href="/incident" class="nav-link-custom <?= str_contains($currentPath, '/incident') ? 'active' : '' ?>">
                     Incidents
                 </a>
-                <a href="/contact" class="nav-link-custom <?= $currentPath === '/contact' ? 'active' : '' ?>">
-                    Contact
+                <a href="/hero/liste" class="nav-link-custom <?= $currentPath === '/contact' ? 'active' : '' ?>">
+                    Super-héros
                 </a>
                 <a href="/profile" class="nav-link-custom <?= str_contains($currentPath, '/profile') ? 'active' : '' ?>">
                     Profil
@@ -66,7 +66,7 @@ $showAuthButtons = in_array($currentPath, $publicPages) && !$isLoggedIn;
                 <a href="/#search" class="nav-link-custom hover-opacity-100">
                     Recherche
                 </a>
-                <a href="/#heroes" class="nav-link-custom hover-opacity-100">
+                <a href="/hero/liste" class="nav-link-custom hover-opacity-100">
                     Super-héros
                 </a>
             <?php endif; ?>

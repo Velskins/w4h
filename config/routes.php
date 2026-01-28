@@ -33,6 +33,7 @@ return function (Router $router) {
 
     $router->get('/hero/create', [HeroController::class, 'create']);
     $router->post('/hero/store', [HeroController::class, 'store']);
+    $router->get('/hero/liste', [HeroController::class, 'list']);
 
     $router->get('/hero/dashboard', [HeroController::class, 'dashboard']);
     $router->post('/hero/take', [HeroController::class, 'takeIncident']);

@@ -158,4 +158,14 @@ final class HeroController extends Controller
 
         return Response::redirect('/citizen/dashboard');
     }
+
+    public function list(): Response
+    {
+        $heroes = $this->heroProfile->findAllActive();
+
+        return $this->view('hero/hero-liste', [
+            'title' => 'Nos Super-Héros',
+            'heroes' => $heroes
+        ]);
+    }
 }
