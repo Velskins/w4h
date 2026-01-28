@@ -1,5 +1,5 @@
 <style>
-    /* PAGE PROFIL */
+
     .profile-page {
         background-image: #f2f4f8;
         min-height: 100vh;
@@ -7,19 +7,19 @@
         overflow-x: hidden;
     }
 
-    /* CONTENU */
+
     .profile-content {
         padding: 30px;
     }
 
-    /* CARTE */
+
     .profile-card {
         background-color: #ffffff;
         border-radius: 12px;
         border: none;
     }
 
-    /* TITRES */
+
     .section-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -28,7 +28,7 @@
         margin-bottom: 10px;
     }
 
-    /* AVATAR */
+
     .profile-avatar {
         width: 110px;
         height: 110px;
@@ -60,7 +60,7 @@
 
                     <div class="col-md-3 text-md-end text-center">
                         <div class="profile-avatar">
-                            <!-- image plus tard -->
+
                         </div>
                     </div>
                 </div>
