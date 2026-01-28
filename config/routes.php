@@ -14,6 +14,11 @@ return function (Router $router) {
 
     $router->get('/logout', [UserController::class, 'logout']);
 
+    $router->get('/forgot-password', [UserController::class, 'forgotPassword']);
+    $router->post('/forgot-password', [UserController::class, 'handleForgotPassword']);
+    $router->get('/reset-password', [UserController::class, 'resetPassword']);
+    $router->post('/reset-password', [UserController::class, 'handleResetPassword']);
+
     $router->get('/citizen/dashboard', [CitizenController::class, 'index']);
 
     $router->get('/profile', [UserController::class, 'profile']);
