@@ -14,7 +14,7 @@
 
             <input type="password" name="pwd" placeholder="Mot de passe" required>
 
-            <a href="#" class="forgot">Mot de passe oublié ?</a>
+            <a href="/forgot-password" class="forgot">Mot de passe oublié ?</a>
 
             <button type="submit">Connexion</button>
         </form>
