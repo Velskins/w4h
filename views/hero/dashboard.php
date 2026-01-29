@@ -100,20 +100,89 @@
 
         <div class="row g-4">
 
-            <div class="col-lg-8">
-                <div class="premium-glass-card p-0 h-100 d-flex flex-column">
+            <div class="col-lg-8 d-flex flex-column gap-4">
+
+                <div class="premium-glass-card p-0">
                     <div
                         class="p-4 border-bottom border-light border-opacity-10 d-flex justify-content-between align-items-center">
                         <h2
                             class="h6 fw-bold text-white mb-0 text-uppercase letter-spacing-2 d-flex align-items-center">
-                            <i class="bi bi-shield-exclamation me-2 text-danger"></i>Incidents en cours
+                            <i class="bi bi-lightning-charge-fill me-2 text-warning"></i>Mes Missions Actives
                         </h2>
                         <span
-                            class="badge bg-danger bg-opacity-25 text-danger border border-danger font-mono animate-pulse">LIVE
-                            ACTION</span>
+                            class="badge bg-warning bg-opacity-25 text-warning border border-warning font-mono animate-pulse">IN
+                            PROGRESS</span>
                     </div>
 
-                    <div class="p-4 flex-grow-1">
+                    <div class="p-4">
+                        <?php
+                        // On filtre pour n'afficher que les interventions 'En cours' dans ce bloc
+                        $activeMissions = array_filter($my_interventions ?? [], function ($i) {
+                            return $i['status'] === 'En cours';
+                        });
+                        ?>
+
+                        <?php if (empty($activeMissions)): ?>
+                            <div class="text-center py-4 opacity-50">
+                                <i class="bi bi-clipboard-check display-5 mb-2 text-white-50"></i>
+                                <p class="text-white-50 small mb-0">Aucune mission en cours. Sélectionnez un incident
+                                    ci-dessous.</p>
+                            </div>
+                        <?php else: ?>
+                            <div class="table-responsive">
+                                <table class="table hud-table align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Incident</th>
+                                            <th>Lieu</th>
+                                            <th>Date Prise</th>
+                                            <th class="text-end">Rapport</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($activeMissions as $mission): ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="fw-bold text-white"><?= htmlspecialchars($mission['type']) ?>
+                                                    </div>
+                                                    <div class="x-small text-danger font-mono">
+                                                        <?= htmlspecialchars($mission['villain_name'] ?? '') ?></div>
+                                                </td>
+                                                <td class="text-white-50 small"><?= htmlspecialchars($mission['city']) ?></td>
+                                                <td class="font-mono text-white-50 x-small">
+                                                    <?= date('H:i', strtotime($mission['date'])) ?>
+                                                </td>
+                                                <td class="text-end">
+                                                    <form action="/hero/resolve" method="POST">
+                                                        <input type="hidden" name="incident_id" value="<?= $mission['id'] ?>">
+                                                        <button type="submit" name="status" value="Terminé"
+                                                            class="btn btn-sm btn-success rounded-pill px-3 fw-bold small text-uppercase"
+                                                            onclick="return confirm('Confirmer la résolution de cet incident ?');">
+                                                            <i class="bi bi-check-lg me-1"></i>MISSION ACCOMPLIE
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <div class="premium-glass-card p-0">
+                    <div
+                        class="p-4 border-bottom border-light border-opacity-10 d-flex justify-content-between align-items-center">
+                        <h2
+                            class="h6 fw-bold text-white mb-0 text-uppercase letter-spacing-2 d-flex align-items-center">
+                            <i class="bi bi-shield-exclamation me-2 text-danger"></i>Incidents Disponibles
+                        </h2>
+                        <span class="badge bg-danger bg-opacity-25 text-danger border border-danger font-mono">LIVE
+                            FEED</span>
+                    </div>
+
+                    <div class="p-4">
                         <?php if (empty($available_incidents)): ?>
                             <div
                                 class="text-center py-5 h-100 d-flex flex-column justify-content-center align-items-center opacity-50">
@@ -171,8 +240,8 @@
                         <?php endif; ?>
                     </div>
                 </div>
-            </div>
 
+            </div>
             <div class="col-lg-4">
                 <div class="premium-glass-card p-4 h-100 position-relative overflow-hidden">
                     <div class="recruit-bg-glow"
@@ -220,6 +289,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 

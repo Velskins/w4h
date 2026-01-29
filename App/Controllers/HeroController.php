@@ -34,8 +34,9 @@ final class HeroController extends Controller
 
     public function dashboard(): Response
     {
-        if (session_status() === PHP_SESSION_NONE)
+        if (session_status() === PHP_SESSION_NONE) {
             session_start();
+        }
 
         if (!isset($_SESSION['user_role'])) {
             return Response::redirect('/login');
@@ -65,10 +66,13 @@ final class HeroController extends Controller
 
     public function takeIncident(): Response
     {
-        if ($this->request->method() !== 'POST')
+        if ($this->request->method() !== 'POST') {
             return Response::redirect('/hero/dashboard');
-        if (session_status() === PHP_SESSION_NONE)
+        }
+
+        if (session_status() === PHP_SESSION_NONE) {
             session_start();
+        }
 
         $incidentId = (int) $this->request->input('incident_id');
         $hero = $this->heroProfile->findByUserId($_SESSION['user_id']);
@@ -86,16 +90,17 @@ final class HeroController extends Controller
 
     public function resolveIncident(): Response
     {
-        if ($this->request->method() !== 'POST')
+        if ($this->request->method() !== 'POST') {
             return Response::redirect('/hero/dashboard');
+        }
 
-        $interventionId = (int) $this->request->input('intervention_id');
         $incidentId = (int) $this->request->input('incident_id');
+        $status = (string) $this->request->input('status');
 
-        if ($interventionId && $incidentId) {
-            $this->interventions->complete($interventionId);
-
+        if ($incidentId && $status === 'Terminé') {
             $this->incidents->updateStatus($incidentId, 'Terminé');
+
+            $this->interventions->completeByIncidentId($incidentId);
         }
 
         return Response::redirect('/hero/dashboard');
@@ -103,8 +108,9 @@ final class HeroController extends Controller
 
     public function create(): Response
     {
-        if (session_status() === PHP_SESSION_NONE)
+        if (session_status() === PHP_SESSION_NONE) {
             session_start();
+        }
 
         if (!isset($_SESSION['user_id'])) {
             return Response::redirect('/login');
@@ -119,8 +125,9 @@ final class HeroController extends Controller
 
     public function store(): Response
     {
-        if (session_status() === PHP_SESSION_NONE)
+        if (session_status() === PHP_SESSION_NONE) {
             session_start();
+        }
 
         if (!isset($_SESSION['user_id'])) {
             return Response::redirect('/login');
