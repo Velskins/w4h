@@ -1,103 +1,165 @@
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
+<div class="cinematic-wrapper min-vh-100 position-relative">
 
-            <div class="card border-0 shadow-lg overflow-hidden text-white"
-                style="background-color: #162435; border-radius: 15px;">
+    <div class="ambient-glow"></div>
+    <div class="noise-texture"></div>
+    <div class="grid-lines"></div>
 
-                <div class="p-4 text-center" style="background: linear-gradient(90deg, #1c4885 0%, #3a7bd5 100%);">
-                    <h2 class="fw-bold text-uppercase mb-0"><i class="bi bi-shield-exclamation me-2"></i>Déclarer un
-                        incident</h2>
-                    <p class="mb-0 opacity-75 small mt-1">Aidez nos héros à intervenir au bon endroit</p>
+    <div class="container py-5 position-relative z-2">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <a href="/citizen/dashboard"
+                        class="d-inline-flex align-items-center text-white-50 text-decoration-none font-mono x-small text-uppercase tracking-wide transition-btn hover-text-white">
+                        <i class="bi bi-arrow-left me-2"></i> Annuler
+                    </a>
+                    <div class="live-badge">
+                        <span class="pulse-ring bg-danger"></span>
+                        SIGNALEMENT_PROTOCOLE_V1
+                    </div>
                 </div>
 
-                <div class="p-5">
+                <div class="premium-glass-card p-0 overflow-hidden">
 
-                    <?php if (isset($error)): ?>
-                        <div class="alert alert-danger">
-                            <?= htmlspecialchars($error) ?>
-                        </div>
-                    <?php endif; ?>
+                    <div class="p-4 p-md-5 border-bottom border-white border-opacity-10 position-relative">
 
-                    <form action="/incident/store" method="POST">
+                        <h1
+                            class="display-5 fw-bold text-white text-uppercase tracking-tight mb-2 font-tech title-glow">
+                            Déclarer un Incident
+                        </h1>
+                        <p class="text-secondary font-sans mb-0">
+                            Remplissez ce formulaire avec précision. Les services d'urgence et les héros seront notifiés
+                            immédiatement.
+                        </p>
+                    </div>
 
-                        <h5 class="text-info text-uppercase fw-bold mb-4 border-bottom border-secondary pb-2">1. Nature
-                            de l'incident</h5>
+                    <div class="p-4 p-md-5">
 
-                        <div class="mb-3">
-                            <label for="title" class="form-label text-white-50">Titre du signalement *</label>
-                            <input type="text" class="form-control bg-dark text-white border-secondary" name="title"
-                                id="title" placeholder="Ex: Braquage en cours, Incendie..." required>
-                        </div>
-
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label for="type" class="form-label text-white-50">Type d'incident *</label>
-                                <select class="form-select bg-dark text-white border-secondary" name="type" id="type">
-                                    <option value="Accident">Accident</option>
-                                    <option value="Braquage">Braquage / Vol</option>
-                                    <option value="Incendie">Incendie</option>
-                                    <option value="Monstre">Attaque de Monstre</option>
-                                    <option value="Catastrophe">Catastrophe Naturelle</option>
-                                    <option value="Autre">Autre</option>
-                                </select>
+                        <?php if (isset($error)): ?>
+                            <div
+                                class="alert alert-danger border-danger bg-danger bg-opacity-10 text-white font-mono small mb-4">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i><?= htmlspecialchars($error) ?>
                             </div>
-                        </div>
+                        <?php endif; ?>
 
-                        <div class="mb-4">
-                            <label for="description" class="form-label text-white-50">Description détaillée</label>
-                            <textarea class="form-control bg-dark text-white border-secondary" name="description"
-                                id="description" rows="4"
-                                placeholder="Décrivez la situation, le nombre de personnes en danger, etc."></textarea>
-                        </div>
+                        <form action="/incident/store" method="POST">
 
-                        <h5 class="text-warning text-uppercase fw-bold mb-4 border-bottom border-secondary pb-2 mt-5">2.
-                            Localisation</h5>
+                            <div class="mb-5">
+                                <h5
+                                    class="text-info font-mono text-uppercase x-small tracking-widest border-bottom border-info border-opacity-25 pb-2 mb-4">
+                                    01 // Identification de la menace
+                                </h5>
 
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-4">
-                                <label class="form-label text-white-50">Numéro *</label>
-                                <input type="number" class="form-control bg-dark text-white border-secondary"
-                                    name="numero" required>
+                                <div class="mb-4">
+                                    <label for="title" class="form-label text-white-50 font-sans small">Titre du
+                                        signalement *</label>
+                                    <input type="text" class="form-control text-white font-mono"
+                                        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"
+                                        name="title" id="title" placeholder="Ex: BRAQUAGE EN COURS..." required>
+                                </div>
+
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-12">
+                                        <label for="type" class="form-label text-white-50 font-sans small">Type
+                                            d'incident *</label>
+                                        <select class="form-select text-white font-mono"
+                                            style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"
+                                            name="type" id="type">
+                                            <option value="Accident" class="text-dark">Accident</option>
+                                            <option value="Braquage" class="text-dark">Braquage / Vol</option>
+                                            <option value="Incendie" class="text-dark">Incendie</option>
+                                            <option value="Monstre" class="text-dark">Attaque de Monstre</option>
+                                            <option value="Catastrophe" class="text-dark">Catastrophe Naturelle</option>
+                                            <option value="Autre" class="text-dark">Autre</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="description"
+                                        class="form-label text-white-50 font-sans small">Description détaillée</label>
+                                    <textarea class="form-control text-white font-mono"
+                                        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"
+                                        name="description" id="description" rows="4"
+                                        placeholder="Décrivez la situation, le nombre de personnes en danger, présence de super-vilains..."></textarea>
+                                </div>
                             </div>
-                            <div class="col-md-8">
-                                <label class="form-label text-white-50">Complément (Bis, Ter...)</label>
-                                <input type="text" class="form-control bg-dark text-white border-secondary"
-                                    name="complement_numero">
+
+                            <div class="mb-5">
+                                <h5
+                                    class="text-warning font-mono text-uppercase x-small tracking-widest border-bottom border-warning border-opacity-25 pb-2 mb-4">
+                                    02 // Coordonnées GPS
+                                </h5>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label text-white-50 font-sans small">Numéro *</label>
+                                        <input type="number" class="form-control text-white font-mono"
+                                            style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"
+                                            name="numero" required>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label class="form-label text-white-50 font-sans small">Complément</label>
+                                        <input type="text" class="form-control text-white font-mono"
+                                            style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"
+                                            name="complement_numero" placeholder="Bis, Ter, Bâtiment...">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label text-white-50 font-sans small">Nom de la rue *</label>
+                                    <input type="text" class="form-control text-white font-mono"
+                                        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"
+                                        name="street" required>
+                                </div>
+
+                                <div class="row g-3">
+                                    <div class="col-md-5">
+                                        <label class="form-label text-white-50 font-sans small">Code Postal *</label>
+                                        <input type="number" class="form-control text-white font-mono"
+                                            style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"
+                                            name="zipcode" required>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label class="form-label text-white-50 font-sans small">Ville *</label>
+                                        <input type="text" class="form-control text-white font-mono"
+                                            style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"
+                                            name="city" required>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="mb-3">
-                            <label class="form-label text-white-50">Nom de la rue *</label>
-                            <input type="text" class="form-control bg-dark text-white border-secondary" name="street"
-                                required>
-                        </div>
-
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-5">
-                                <label class="form-label text-white-50">Code Postal *</label>
-                                <input type="number" class="form-control bg-dark text-white border-secondary"
-                                    name="zipcode" required>
+                            <div class="d-grid mt-5">
+                                <button type="submit"
+                                    class="btn btn-danger-neon py-3 fw-bold font-mono text-uppercase tracking-wide shadow-lg">
+                                    <i class="bi bi-broadcast me-2 animate-pulse"></i> Transmettre l'alerte
+                                </button>
+                                <p class="text-center text-white-50 mt-3 x-small font-mono opacity-50">
+                                    <i class="bi bi-lock-fill me-1"></i> Connexion sécurisée. Votre signalement est
+                                    traçable.
+                                </p>
                             </div>
-                            <div class="col-md-7">
-                                <label class="form-label text-white-50">Ville *</label>
-                                <input type="text" class="form-control bg-dark text-white border-secondary" name="city"
-                                    required>
-                            </div>
-                        </div>
 
-                        <div class="d-grid mt-5">
-                            <button type="submit" class="btn btn-primary py-3 fw-bold text-uppercase shadow-lg"
-                                style="background: linear-gradient(90deg, #d53a3a 0%, #e85a5a 100%); border: none;">
-                                <i class="bi bi-send-fill me-2"></i>Envoyer le signalement
-                            </button>
-                            <p class="text-center text-white-50 mt-2 small">Votre signalement sera validé par nos
-                                services avant diffusion.</p>
-                        </div>
-
-                    </form>
+                        </form>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .form-control:focus,
+    .form-select:focus {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        border-color: var(--neon-cyan) !important;
+        box-shadow: 0 0 15px rgba(13, 202, 240, 0.2);
+        color: white;
+    }
+
+    ::placeholder {
+        color: rgba(255, 255, 255, 0.2) !important;
+    }
+</style>
