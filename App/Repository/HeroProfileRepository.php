@@ -40,6 +40,17 @@ final class HeroProfileRepository
         ]);
     }
 
+    public function findAllActive(): array
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT * FROM hero_profile 
+            WHERE is_active = 1 
+            ORDER BY alias ASC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
     public function activateByUserId(int $userId): bool
     {
         $stmt = $this->pdo->prepare("UPDATE hero_profile SET is_active = 1 WHERE users_id = :userId");

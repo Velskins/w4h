@@ -23,15 +23,8 @@
 
                 <div class="hero-footer">
                     <a href="show_profile.php?id=<?= $hero['id'] ?>" class="btn-more-realistic">Infos</a>
-
                 </div>
             </div>
         <?php endforeach; ?>
-
-
-
-
-
-
     </div>
 </main>

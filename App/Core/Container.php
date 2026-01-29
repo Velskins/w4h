@@ -5,6 +5,7 @@ namespace App\Core;
 
 use PDO;
 use App\Core\Request;
+use App\Core\Mailer;
 
 use App\Controllers\UserController;
 use App\Controllers\IncidentController;
@@ -67,6 +68,12 @@ final class Container
                 new IncidentRepository($this->pdo),
                 new VillainRepository($this->pdo),
                 new HeroProfileRepository($this->pdo)
+            ),
+
+            UserController::class => new UserController(
+                $request,
+                new UserRepository($this->pdo),
+                new Mailer()
             ),
 
             default => new $controllerClass($request),

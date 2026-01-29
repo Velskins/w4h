@@ -1,94 +1,227 @@
-<form action="/register" method="POST" class="split-screen-form">
+<main class="auth-page container-fluid p-0">
 
-    <div class="panel left-panel">
-        <div class="panel-content">
-            <h1>Inscription</h1>
+    <form action="/register" method="POST" class="h-100">
 
-            <?php if (isset($error)): ?>
-                <div style="color: red; background: rgba(255,0,0,0.1); padding: 10px; border-radius: 10px; margin-bottom: 20px;">
-                    <?= htmlspecialchars($error) ?>
+        <div class="row g-0 min-vh-100">
+
+            <div class="col-lg-5 col-12 auth-panel-light d-flex flex-column justify-content-center">
+
+                <div class="auth-content-wrapper mx-auto mt-n4">
+
+                    <h1 class="auth-title mb-3">Inscription</h1>
+
+                    <?php if (isset($error)): ?>
+                        <div class="alert alert-danger py-2 small">
+                            <?= htmlspecialchars($error) ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <h6 class="auth-section-title">Informations personnelles</h6>
+
+                    <div class="mb-3">
+                        <select name="gender" class="form-select auth-input">
+                            <option value="" selected disabled>Civilité</option>
+                            <option value="Male">Monsieur</option>
+                            <option value="Femelle">Madame</option>
+                        </select>
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <input type="text" name="lastname" class="form-control auth-input" placeholder="Nom" required>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" name="firstname" class="form-control auth-input" placeholder="Prénom" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <input type="date" name="birthdate" class="form-control auth-input text-muted">
+                    </div>
+
+                    <h6 class="auth-section-title mt-4">Complémentaires</h6>
+
+                    <div class="mb-3">
+                        <input type="email" name="email" class="form-control auth-input" placeholder="Adresse email" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="text" name="phone" class="form-control auth-input" placeholder="N° de portable">
+                    </div>
+
+                    <div class="d-lg-none text-center mt-3 text-muted small">
+                        Suite du formulaire plus bas <i class="bi bi-arrow-down"></i>
+                    </div>
+
                 </div>
-            <?php endif; ?>
-
-            <label class="section-label">Informations personnelles <span class="required-star">*</span></label>
-
-            <div class="input-row">
-                <select name="gender" required>
-                    <option value="" disabled selected>Civilité</option>
-                    <option value="Male">Monsieur</option>
-                    <option value="Femelle">Madame</option>
-                    <option value="other">Autre</option>
-                </select>
             </div>
 
-            <div class="input-row">
-                <input type="text" name="lastname" placeholder="Nom" required>
-                <input type="text" name="firstname" placeholder="Prénom" required>
-            </div>
+            <div class="col-lg-7 col-12 auth-panel-dark position-relative d-flex flex-column justify-content-center text-white">
 
-            <div class="input-row">
-                <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" name="birthdate" placeholder="Date de naissance">
-            </div>
+                <div class="auth-overlay"></div>
 
-            <div class="input-row">
-                <input type="email" name="email" placeholder="Adresse Email" required>
-            </div>
+                <div class="auth-content-wrapper mx-auto position-relative z-2 mt-n4 pt-4">
 
-            <label class="section-label" style="margin-top: 20px;">Informations complémentaires</label>
+                    <h6 class="auth-section-title text-light opacity-75">Coordonnées</h6>
 
-            <div class="input-row">
-                <input type="tel" name="phone" placeholder="N° de portable">
-            </div>
+                    <div class="mb-3">
+                        <input type="text" name="street" class="form-control auth-input" placeholder="Numéro et nom de rue">
+                    </div>
 
-            <div style="margin-top: 10px; color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
-                <input type="checkbox" name="is_hero" value="1" style="width: auto; margin:0;">
-                <label>Je souhaite devenir un <strong>Héros</strong></label>
-            </div>
-        </div>
-    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-5">
+                            <input type="text" name="zipcode" class="form-control auth-input" placeholder="Code Postal">
+                        </div>
+                        <div class="col-7">
+                            <input type="text" name="city" class="form-control auth-input" placeholder="Ville">
+                        </div>
+                    </div>
 
-    <div class="panel right-panel">
-        <div class="panel-content">
+                    <div class="mb-4">
+                        <select name="country" class="form-select auth-input">
+                            <option value="FR" selected>France</option>
+                            <option value="BE">Belgique</option>
+                            <option value="CH">Suisse</option>
+                        </select>
+                    </div>
 
-            <label class="section-label">Coordonnées <span class="required-star">*</span></label>
+                    <h6 class="auth-section-title text-light opacity-75 mt-4">Sécurité</h6>
 
-            <div class="input-row">
-                <input type="number" name="street_number" placeholder="N°" style="flex: 0 0 80px;">
-                <input type="text" name="street" placeholder="Nom de la voie">
-            </div>
+                    <div class="row g-2 mb-4">
+                        <div class="col-6">
+                            <input type="password" name="pwd" class="form-control auth-input" placeholder="Mot de passe" required>
+                        </div>
+                        <div class="col-6">
+                            <input type="password" name="pwd_confirm" class="form-control auth-input" placeholder="Confirmation" required>
+                        </div>
+                    </div>
 
-            <div class="input-row">
-                <input type="text" name="complement_number" placeholder="Complément (facultatif)">
-            </div>
+                    <div class="d-flex justify-content-between align-items-center mt-5">
+                        <a href="/login" class="text-white text-decoration-none small opacity-75 hover-opacity-100">
+                            Déjà inscrit ? Connexion
+                        </a>
 
-            <div class="input-row">
-                <input type="text" name="city" placeholder="Ville">
-                <input type="number" name="zipcode" placeholder="Code Postal">
-            </div>
+                        <button type="submit" class="btn auth-btn px-5">
+                            Valider
+                        </button>
+                    </div>
 
-            <div class="input-row">
-                <select name="country">
-                    <option value="France">France</option>
-                    <option value="Belgique">Belgique</option>
-                    <option value="Suisse">Suisse</option>
-                    <option value="USA">États-Unis</option>
-                </select>
-            </div>
-
-            <label class="section-label" style="margin-top: 30px;">Sécurité <span class="required-star">*</span></label>
-
-            <div class="input-row">
-                <input type="password" name="pwd" placeholder="Mot de passe" required>
-                <input type="password" name="pwd_confirm" placeholder="Confirmation">
-            </div>
-
-            <button type="submit" class="submit-btn">Inscription</button>
-
-            <div class="login-link">
-                Vous avez déjà un compte ? <a href="/login">Connectez-vous</a>
+                </div>
             </div>
 
         </div>
-    </div>
+    </form>
+</main>
 
-</form>
+<style>
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background-color: #fff;
+    }
+    .auth-page { overflow-x: hidden; }
+
+
+    .auth-content-wrapper {
+        width: 100%;
+        max-width: 400px;
+        padding: 2rem;
+
+        transition: all 0.3s ease;
+    }
+
+
+    .auth-panel-light {
+        background-color: #e3e5e8;
+        color: #2c3e50;
+    }
+
+
+    .auth-panel-dark {
+        background-image: url('/public/assets/DA/ppspid.png');
+        background-size: cover;
+        background-position: center center;
+    }
+
+
+    .auth-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+                135deg,
+                rgba(20, 30, 48, 0.75) 0%,
+                rgba(36, 59, 85, 0.55) 100%
+        );
+        z-index: 1;
+    }
+
+
+    .auth-title {
+        font-size: 28px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #1f3552;
+
+    }
+
+    .auth-section-title {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #6c757d;
+        border-bottom: 2px solid rgba(0,0,0,0.05);
+        padding-bottom: 5px;
+        display: inline-block;
+    }
+
+
+    .auth-input {
+        background-color: #ffffff;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        padding: 12px 15px;
+        font-size: 14px;
+        color: #495057;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+        transition: all 0.2s;
+    }
+
+    .auth-input:focus {
+        background-color: #fff;
+        border-color: #2c4d73;
+        box-shadow: 0 4px 12px rgba(44,77,115,0.15);
+        outline: none;
+    }
+
+
+    .auth-btn {
+        background: linear-gradient(to right, #2c4d73, #1f3552);
+        color: #fff;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: transform 0.2s;
+    }
+
+    .auth-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 991px) {
+        .auth-panel-dark {
+            background-image: none;
+            background-color: #1f3552;
+        }
+        .auth-content-wrapper {
+            margin-top: 0 !important;
+            padding: 30px 20px;
+        }
+    }
+</style>

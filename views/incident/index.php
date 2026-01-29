@@ -1,70 +1,131 @@
-<div class="container py-5 min-vh-100">
-    
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold text-uppercase text-black" style="letter-spacing: 2px;">Incidents en cours</h1>
-        <p class="lead text-black-50">Restez informés des interventions de nos super-héros près de chez vous.</p>
-    </div>
+<div class="cinematic-wrapper min-vh-100 position-relative">
 
-    <div class="row g-4">
-        
-        <?php if (empty($incidents)): ?>
-            <div class="col-12 text-center py-5">
-                <i class="bi bi-shield-check display-1 text-success mb-3"></i>
-                <h3 class="text-white">Tout est calme !</h3>
-                <p class="text-white-50">Aucun incident n'est signalé pour le moment.</p>
+    <div class="ambient-glow"></div>
+    <div class="noise-texture"></div>
+    <div class="grid-lines"></div>
+
+    <div class="container py-5 position-relative z-2">
+
+        <div class="row align-items-end mb-6 pb-4 border-bottom border-white border-opacity-10">
+            <div class="col-lg-8">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="live-badge">
+                        <span class="pulse-ring"></span>
+                        LIVE
+                    </span>
+                    <span class="font-mono text-white-50 x-small"> SYSTEM_V2.4</span>
+                </div>
+
+                <h1 class="display-3 fw-bold text-white text-uppercase tracking-tight leading-none mb-2">
+                    Flux d'Incidents
+                </h1>
+
+                <p class="text-secondary font-sans fs-5" style="max-width: 500px;">
+                    Surveillance en temps réel des activités héroïques et menaces urbaines
+                </p>
+
+                <div class="mt-4">
+                    <a href="/incident/create"
+                        class="btn btn-danger-neon px-4 py-2 fw-bold rounded-pill d-inline-flex align-items-center gap-2 font-mono tracking-wide">
+                        <i class="bi bi-megaphone-fill"></i>
+                        SIGNALER UN DANGER
+                    </a>
+                </div>
             </div>
-        <?php else: ?>
-            
-            <?php foreach ($incidents as $incident): ?>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 border-0 shadow-sm text-white position-relative overflow-hidden" 
-                         style="background-color: #162435; border-radius: 15px; transition: transform 0.3s ease;">
-                        
-                        <div class="position-absolute top-0 end-0 mt-3 me-3">
-                            <span class="badge rounded-pill bg-primary text-uppercase small shadow">
-                                <?= htmlspecialchars($incident['type']) ?>
-                            </span>
-                        </div>
 
-                        <div class="card-body p-4 d-flex flex-column">
-                            <div class="d-flex align-items-center text-white-50 mb-3 small text-uppercase fw-bold">
-                                <i class="bi bi-geo-alt-fill me-1 text-danger"></i>
-                                <?= htmlspecialchars($incident['city']) ?>
-                                <span class="mx-2">•</span>
-                                <?= date('d/m H:i', strtotime($incident['date'])) ?>
-                            </div>
+            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                <div class="stat-group">
+                    <span
+                        class="stat-value text-white font-mono"><?= str_pad(count($incidents ?? []), 2, '0', STR_PAD_LEFT) ?></span>
+                    <span class="stat-label text-secondary x-small text-uppercase tracking-2">Menaces Actives</span>
+                </div>
+            </div>
+        </div>
 
-                            <h4 class="card-title fw-bold mb-3"><?= htmlspecialchars($incident['title']) ?></h4>
+        <div class="row g-4">
 
-                            <p class="card-text text-white-50 mb-4 flex-grow-1">
-                                <?= substr(htmlspecialchars($incident['description']), 0, 100) ?>...
-                            </p>
+            <?php if (empty($incidents)): ?>
+                <div class="col-12 py-5">
+                    <div class="empty-state-card">
+                        <div class="glow-orb bg-success"></div>
+                        <i class="bi bi-shield-check display-1 position-relative z-2 text-white"></i>
+                        <h3 class="mt-4 text-white text-uppercase tracking-widest">Périmètre Sécurisé</h3>
+                        <p class="text-white-50 font-mono">Aucune anomalie détectée pour le moment.</p>
 
-                            <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary">
-                                <?php 
-                                    $statusColor = match($incident['status']) {
-                                        'En attente' => 'text-warning',
-                                        'Validé' => 'text-info',
-                                        'En cours' => 'text-primary',
-                                        'Terminé' => 'text-success',
-                                        default => 'text-secondary'
-                                    };
-                                ?>
-                                <span class="d-flex align-items-center fw-bold small <?= $statusColor ?>">
-                                    <i class="bi bi-circle-fill me-2" style="font-size: 8px;"></i>
-                                    <?= htmlspecialchars($incident['status']) ?>
-                                </span>
-
-                                <a href="/incident/show?id=<?= $incident['id'] ?>" class="btn btn-sm btn-light rounded-pill px-3 fw-bold">
-                                    Voir <i class="bi bi-arrow-right ms-1"></i>
-                                </a>
-                            </div>
+                        <div class="mt-4 position-relative z-2">
+                            <a href="/incident/create" class="btn btn-outline-light rounded-pill px-4">
+                                Signaler quelque chose
+                            </a>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php else: ?>
 
-        <?php endif; ?>
+                <?php foreach ($incidents as $incident): ?>
+                    <?php
+                    $meta = match ($incident['status']) {
+                        'En attente' => ['color' => '#fbbf24', 'bg' => 'warning', 'label' => 'Analyse'],
+                        'En cours' => ['color' => '#3b82f6', 'bg' => 'primary', 'label' => 'Intervention'],
+                        'Validé' => ['color' => '#06b6d4', 'bg' => 'info', 'label' => 'Confirmé'],
+                        'Terminé' => ['color' => '#10b981', 'bg' => 'success', 'label' => 'Clôturé'],
+                        default => ['color' => '#94a3b8', 'bg' => 'secondary', 'label' => $incident['status']]
+                    };
+                    ?>
 
+                    <div class="col-md-6 col-lg-4">
+                        <a href="/incident/show?id=<?= $incident['id'] ?>" class="data-card group">
+
+                            <div class="card-border-glow" style="--glow-color: <?= $meta['color'] ?>"></div>
+
+                            <div class="card-content">
+
+                                <div class="d-flex justify-content-between align-items-start mb-4">
+                                    <div class="d-flex flex-column">
+                                        <span class="font-mono x-small text-white-50 mb-1">ID:
+                                            #<?= str_pad($incident['id'], 4, '0', STR_PAD_LEFT) ?></span>
+                                        <div class="d-flex align-items-center gap-2 text-white small fw-bold text-uppercase">
+                                            <i class="bi bi-geo-alt-fill text-<?= $meta['bg'] ?>"></i>
+                                            <?= htmlspecialchars($incident['city']) ?>
+                                        </div>
+                                    </div>
+
+                                    <span class="status-chip" style="--chip-color: <?= $meta['color'] ?>">
+                                        <span class="chip-dot"></span>
+                                        <?= htmlspecialchars($meta['label']) ?>
+                                    </span>
+                                </div>
+
+                                <div class="mb-4 position-relative z-2">
+                                    <span class="category-tag mb-2"><?= htmlspecialchars($incident['type']) ?></span>
+                                    <h3 class="h4 text-white fw-bold mb-2 tracking-wide text-uppercase">
+                                        <?= htmlspecialchars($incident['title']) ?>
+                                    </h3>
+                                    <p class="text-secondary small line-clamp-2 font-sans">
+                                        <?= htmlspecialchars($incident['description']) ?>
+                                    </p>
+                                </div>
+
+                                <div class="card-footer-tech">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-clock-history text-white-50 x-small"></i>
+                                        <span class="font-mono text-white-50 x-small">
+                                            <?= date('H:i:s', strtotime($incident['date'])) ?>
+                                        </span>
+                                    </div>
+                                    <div class="action-indicator text-white">
+                                        <span class="x-small fw-bold me-2">ACCÉDER</span>
+                                        <i class="bi bi-arrow-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-spot" style="background: <?= $meta['color'] ?>"></div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+
+            <?php endif; ?>
+
+        </div>
     </div>
 </div>

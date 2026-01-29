@@ -7,18 +7,23 @@ use App\Core\Controller;
 use App\Core\Request;
 use App\Core\Response;
 use App\Repository\UserRepository;
+use App\Core\Mailer;
 
 final class UserController extends Controller
 {
     private UserRepository $users;
+    private Mailer $mailer;
 
     public function __construct(
         Request $request,
-        UserRepository $users
+        UserRepository $users,
+        Mailer $mailer = null
     ) {
         parent::__construct($request);
         $this->users = $users;
+        $this->mailer = $mailer ?? new Mailer();
     }
+
 
     public function profile(): Response
     {
@@ -41,6 +46,7 @@ final class UserController extends Controller
             'user' => $user
         ]);
     }
+
 
     public function register(): Response
     {
@@ -93,6 +99,7 @@ final class UserController extends Controller
 
         return Response::redirect('/login');
     }
+
 
     public function login(): Response
     {
@@ -148,6 +155,88 @@ final class UserController extends Controller
         return Response::redirect('/login');
     }
 
+
+    public function forgotPassword(): Response
+    {
+        return $this->view('auth/forgot', [
+            'title' => 'Mot de passe oublié'
+        ]);
+    }
+
+    public function handleForgotPassword(): Response
+    {
+        $email = trim((string) $this->request->input('email'));
+
+        if (empty($email)) {
+            return $this->view('auth/forgot', ['error' => 'Veuillez entrer votre email.', 'title' => 'Oubli']);
+        }
+
+        $user = $this->users->findOneByEmail($email);
+
+        if ($user) {
+            $host = $_SERVER['HTTP_HOST'];
+
+            $resetLink = "http://$host/reset-password?token=demo123&email=" . urlencode($email);
+
+            $subject = "Réinitialisation de votre mot de passe";
+            $message = "
+                <h1>Bonjour {$user['firstname']},</h1>
+                <p>Pour définir un nouveau mot de passe, cliquez ici :</p>
+                <p><a href='$resetLink'><strong>Changer mon mot de passe</strong></a></p>
+            ";
+
+            $this->mailer->send($email, $subject, $message);
+        }
+
+        return $this->view('auth/forgot_success', ['title' => 'Email envoyé']);
+    }
+
+    public function resetPassword(): Response
+    {
+        $token = $this->request->query('token');
+        $email = $this->request->query('email');
+
+        if ($token !== 'demo123' || empty($email)) {
+            return Response::redirect('/login');
+        }
+
+        return $this->view('auth/reset_password', [
+            'title' => 'Nouveau mot de passe',
+            'email' => $email,
+            'token' => $token
+        ]);
+    }
+
+    public function handleResetPassword(): Response
+    {
+        $token = $this->request->input('token');
+        $email = $this->request->input('email');
+        $pwd = (string) $this->request->input('pwd');
+        $pwdConfirm = (string) $this->request->input('pwd_confirm');
+
+        if ($token !== 'demo123' || empty($email)) {
+            return Response::redirect('/login');
+        }
+
+        if ($pwd !== $pwdConfirm) {
+            return $this->view('auth/reset_password', [
+                'title' => 'Nouveau mot de passe',
+                'email' => $email,
+                'token' => $token,
+                'error' => 'Les mots de passe ne correspondent pas.'
+            ]);
+        }
+
+        $user = $this->users->findOneByEmail($email);
+
+        if ($user) {
+            $this->users->updatePassword($user['id'], password_hash($pwd, PASSWORD_DEFAULT));
+        }
+
+        return Response::redirect('/login');
+    }
+
+
     public function editProfile(): Response
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -195,7 +284,6 @@ final class UserController extends Controller
             'street' => $this->request->input('street') ?? '',
             'zipcode' => $this->request->input('zipcode') ?? null,
             'city' => $this->request->input('city') ?? '',
-
 
             'pwd' => $existingUser['pwd'],
             'role' => $existingUser['role']
