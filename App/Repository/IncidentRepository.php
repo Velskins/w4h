@@ -174,7 +174,30 @@ final class IncidentRepository
         return $stmt->rowCount() > 0;
     }
 
-    // --- PARTIE ADMIN ---
+
+    public function getStatsByType(): array
+    {
+        $totalStmt = $this->pdo->query("SELECT COUNT(*) FROM incidents");
+        $total = (int) $totalStmt->fetchColumn();
+
+        if ($total === 0) {
+            return [];
+        }
+
+        $stmt = $this->pdo->query("
+            SELECT type, COUNT(*) as count 
+            FROM incidents 
+            GROUP BY type 
+            ORDER BY count DESC
+        ");
+        $results = $stmt->fetchAll();
+
+        foreach ($results as &$row) {
+            $row['percent'] = round(($row['count'] / $total) * 100, 1);
+        }
+
+        return $results;
+    }
 
     public function findAllPending(): array
     {
