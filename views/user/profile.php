@@ -35,57 +35,57 @@
 
             <div class="col-lg-4">
                 <div class="premium-glass-card h-100 text-center p-5 position-relative overflow-hidden">
-
+                    
                     <div class="card-border-glow" style="--glow-color: #0dcaf0"></div>
                     <div class="bg-spot" style="background: #0dcaf0; top: -20%; left: -20%;"></div>
 
-                    <div class="position-relative d-inline-block mb-4">
-                        <div class="avatar-ring"></div>
-                        <div class="profile-avatar">
-                            <?= strtoupper(mb_substr($user['firstname'], 0, 1)); ?>
+                    <div class="position-relative z-2">
+
+                        <div class="position-relative d-inline-block mb-4">
+                            <div class="avatar-ring"></div>
+                            <div class="profile-avatar">
+                                <?= strtoupper(mb_substr($user['firstname'], 0, 1)); ?>
+                            </div>
+                            <div class="status-indicator-absolute bg-success"></div>
                         </div>
-                        <div class="status-indicator-absolute bg-success"></div>
-                    </div>
 
-                    <h2 class="h3 fw-bold text-white text-uppercase mb-1 title-glow">
-                        <?= htmlspecialchars($user['firstname']) ?>
-                        <span class="d-block text-info opacity-75"><?= htmlspecialchars($user['lastname']) ?></span>
-                    </h2>
+                        <h2 class="h3 fw-bold text-white text-uppercase mb-1 title-glow">
+                            <?= htmlspecialchars($user['firstname']) ?>
+                            <span class="d-block text-info opacity-75"><?= htmlspecialchars($user['lastname']) ?></span>
+                        </h2>
 
-                    <div class="mt-3 mb-4">
-                        <?php
-                        $roles = json_decode($user['role'], true);
-                        foreach ($roles as $role):
-                            $badgeColor = match ($role) {
-                                'ROLE_ADMIN' => 'danger',
-                                'ROLE_HERO' => 'warning',
-                                default => 'info'
-                            };
-                            $roleName = match ($role) {
-                                'ROLE_ADMIN' => 'ADMINISTRATEUR',
-                                'ROLE_HERO' => 'SUPER-HÉROS',
-                                'ROLE_HERO_PENDING' => 'CANDIDAT',
-                                default => 'CITOYEN'
-                            };
+                        <div class="mt-3 mb-4">
+                            <?php 
+                                $roles = json_decode($user['role'], true);
+                                foreach($roles as $role): 
+                                    $badgeColor = match($role) {
+                                        'ROLE_ADMIN' => 'danger',
+                                        'ROLE_HERO' => 'warning',
+                                        default => 'info'
+                                    };
+                                    $roleName = match($role) {
+                                        'ROLE_ADMIN' => 'ADMINISTRATEUR',
+                                        'ROLE_HERO' => 'SUPER-HÉROS',
+                                        'ROLE_HERO_PENDING' => 'CANDIDAT',
+                                        default => 'CITOYEN'
+                                    };
                             ?>
-                            <span class="role-badge border-<?= $badgeColor ?> text-<?= $badgeColor ?>">
-                                <?= $roleName ?>
-                            </span>
-                        <?php endforeach; ?>
-                    </div>
+                                <span class="role-badge border-<?= $badgeColor ?> text-<?= $badgeColor ?>">
+                                    <?= $roleName ?>
+                                </span>
+                            <?php endforeach; ?>
+                        </div>
 
-                    <div class="d-flex flex-column gap-3 mt-5">
-                        <a href="/profile/edit"
-                            class="btn btn-outline-light w-100 font-mono text-uppercase tracking-wide">
-                            <i class="bi bi-pencil-square me-2"></i>Mise à jour
-                        </a>
-                        <a href="/logout"
-                            class="btn btn-outline-danger w-100 font-mono text-uppercase tracking-wide btn-danger-glow">
-                            <i class="bi bi-power me-2"></i>Déconnexion
-                        </a>
-                    </div>
-
-                </div>
+                        <div class="d-flex flex-column gap-3 mt-5">
+                            <a href="/profile/edit" class="btn btn-outline-light w-100 font-mono text-uppercase tracking-wide position-relative" style="z-index: 10;">
+                                <i class="bi bi-pencil-square me-2"></i>Mise à jour
+                            </a>
+                            <a href="/logout" class="btn btn-outline-danger w-100 font-mono text-uppercase tracking-wide btn-danger-glow position-relative" style="z-index: 10;">
+                                <i class="bi bi-power me-2"></i>Déconnexion
+                            </a>
+                        </div>
+                    
+                    </div> </div>
             </div>
 
             <div class="col-lg-8">
