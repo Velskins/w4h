@@ -116,31 +116,3 @@ $showAuthButtons = in_array($currentPath, $publicPages) && !$isLoggedIn;
 
     </div>
 </header>
-
-<style>
-    .font-mono {
-        font-family: 'JetBrains Mono', monospace, sans-serif;
-    }
-
-    .nav-link-custom {
-        color: rgba(255, 255, 255, 0.6);
-        text-decoration: none;
-        transition: all 0.3s ease;
-        padding-bottom: 2px;
-        border-bottom: 2px solid transparent;
-    }
-
-    .nav-link-custom:hover,
-    .nav-link-custom.active {
-        color: white;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-
-    .nav-link-custom.active {
-        border-bottom-color: #0dcaf0;
-    }
-
-    .transition-btn {
-        transition: all 0.3s ease;
-    }
-</style>

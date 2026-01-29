@@ -1,5 +1,4 @@
 <style>
-    /* PAGE EDIT PROFILE */
     .edit-profile-page {
         min-height: 100vh;
         background-image: url("../../public/assets/DA/profilebackground.jpg");
@@ -8,7 +7,6 @@
         padding: 40px 20px;
     }
 
-    /* CARTE FORMULAIRE */
     .edit-profile-card {
         background-color: rgba(255, 255, 255, 0.85);
         border-radius: 14px;
@@ -16,7 +14,6 @@
         max-width: 1100px;
     }
 
-    /* TITRES */
     .edit-profile-title {
         font-size: 2rem;
         font-weight: 600;
@@ -30,7 +27,6 @@
         margin-bottom: 15px;
     }
 
-    /* FORM */
     .form-label {
         font-weight: 600;
     }
@@ -40,7 +36,6 @@
         border-radius: 8px;
     }
 
-    /* BOUTONS */
     .btn-save {
         padding: 10px 30px;
         font-weight: 600;
